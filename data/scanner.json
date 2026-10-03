@@ -1,0 +1,320 @@
+{
+  "generated_at": "2026-10-03T16:04:17.521680+00:00",
+  "source": "Twelve Data",
+  "mode": "paper",
+  "engine": "Doc's Scanner v1",
+  "rules": {
+    "trend": "Price above SMA10 and SMA20, with SMA5 above SMA20.",
+    "momentum": "Positive 5-day and 10-day momentum with RSI14 between 50 and 72.",
+    "volume": "Latest reported volume at or above the prior 20-session average.",
+    "paper_stop": "Entry minus 1 ATR.",
+    "paper_target": "Entry plus 2 ATR.",
+    "minimum_reward_risk": 2.0
+  },
+  "summary": {
+    "symbols_requested": 5,
+    "symbols_scanned": 5,
+    "qualified": 1,
+    "watch": 3,
+    "pass": 1,
+    "errors": 0
+  },
+  "results": [
+    {
+      "symbol": "MSFT",
+      "market_date": "2026-10-02",
+      "status": "QUALIFIED",
+      "score": 5,
+      "max_score": 6,
+      "price": {
+        "current": 517.53,
+        "previous_close": 512.8,
+        "daily_change_percent": 0.92
+      },
+      "trend": {
+        "passed": true,
+        "sma5": 512.282,
+        "sma10": 507.571,
+        "sma20": 501.672,
+        "sma50": 487.7242,
+        "price_above_sma5": true,
+        "price_above_sma10": true,
+        "price_above_sma20": true,
+        "sma5_above_sma20": true
+      },
+      "momentum": {
+        "passed": true,
+        "rsi14": 57.83,
+        "five_day_percent": 0.26,
+        "ten_day_percent": 4.81
+      },
+      "volume": {
+        "passed": false,
+        "current": 17803300,
+        "average20": 21570125,
+        "relative_volume": 0.83
+      },
+      "volatility": {
+        "atr14": 11.8486
+      },
+      "paper_setup": {
+        "entry": 517.53,
+        "stop": 505.6815,
+        "target": 541.2272,
+        "risk_per_share": 11.8486,
+        "reward_per_share": 23.6971,
+        "reward_risk_ratio": 2.0,
+        "passed": true
+      },
+      "checks": {
+        "trend": true,
+        "momentum": true,
+        "volume": false,
+        "risk_reward": true
+      },
+      "reasons": [
+        "Price trend is above key short-term moving averages.",
+        "5-day and 10-day momentum are positive with RSI in the accepted range.",
+        "Latest reported volume is below its recent average.",
+        "Paper setup meets the 2-to-1 reward/risk rule."
+      ]
+    },
+    {
+      "symbol": "QQQ",
+      "market_date": "2026-10-02",
+      "status": "WATCH",
+      "score": 4,
+      "max_score": 6,
+      "price": {
+        "current": 749.58,
+        "previous_close": 742.03,
+        "daily_change_percent": 1.02
+      },
+      "trend": {
+        "passed": true,
+        "sma5": 741.168,
+        "sma10": 742.158,
+        "sma20": 727.7795,
+        "sma50": 716.817,
+        "price_above_sma5": true,
+        "price_above_sma10": true,
+        "price_above_sma20": true,
+        "sma5_above_sma20": true
+      },
+      "momentum": {
+        "passed": false,
+        "rsi14": 75.79,
+        "five_day_percent": 0.68,
+        "ten_day_percent": 3.9
+      },
+      "volume": {
+        "passed": true,
+        "current": 34467100,
+        "average20": 33624470,
+        "relative_volume": 1.03
+      },
+      "volatility": {
+        "atr14": 9.7664
+      },
+      "paper_setup": {
+        "entry": 749.58,
+        "stop": 739.8136,
+        "target": 769.1128,
+        "risk_per_share": 9.7664,
+        "reward_per_share": 19.5328,
+        "reward_risk_ratio": 2.0,
+        "passed": true
+      },
+      "checks": {
+        "trend": true,
+        "momentum": false,
+        "volume": true,
+        "risk_reward": true
+      },
+      "reasons": [
+        "Price trend is above key short-term moving averages.",
+        "Momentum requirements are not fully confirmed.",
+        "Latest reported volume is at or above its recent average.",
+        "Paper setup meets the 2-to-1 reward/risk rule."
+      ]
+    },
+    {
+      "symbol": "SPY",
+      "market_date": "2026-10-02",
+      "status": "WATCH",
+      "score": 4,
+      "max_score": 6,
+      "price": {
+        "current": 769.64,
+        "previous_close": 763.99,
+        "daily_change_percent": 0.74
+      },
+      "trend": {
+        "passed": true,
+        "sma5": 765.214,
+        "sma10": 767.929,
+        "sma20": 764.8285,
+        "sma50": 763.7022,
+        "price_above_sma5": true,
+        "price_above_sma10": true,
+        "price_above_sma20": true,
+        "sma5_above_sma20": true
+      },
+      "momentum": {
+        "passed": false,
+        "rsi14": 58.06,
+        "five_day_percent": -0.22,
+        "ten_day_percent": 1.04
+      },
+      "volume": {
+        "passed": true,
+        "current": 46306400,
+        "average20": 45907130,
+        "relative_volume": 1.01
+      },
+      "volatility": {
+        "atr14": 7.1643
+      },
+      "paper_setup": {
+        "entry": 769.64,
+        "stop": 762.4757,
+        "target": 783.9686,
+        "risk_per_share": 7.1643,
+        "reward_per_share": 14.3286,
+        "reward_risk_ratio": 2.0,
+        "passed": true
+      },
+      "checks": {
+        "trend": true,
+        "momentum": false,
+        "volume": true,
+        "risk_reward": true
+      },
+      "reasons": [
+        "Price trend is above key short-term moving averages.",
+        "Momentum requirements are not fully confirmed.",
+        "Latest reported volume is at or above its recent average.",
+        "Paper setup meets the 2-to-1 reward/risk rule."
+      ]
+    },
+    {
+      "symbol": "NVDA",
+      "market_date": "2026-10-02",
+      "status": "WATCH",
+      "score": 3,
+      "max_score": 6,
+      "price": {
+        "current": 233.95,
+        "previous_close": 230.86,
+        "daily_change_percent": 1.34
+      },
+      "trend": {
+        "passed": true,
+        "sma5": 229.852,
+        "sma10": 228.067,
+        "sma20": 223.786,
+        "sma50": 218.2782,
+        "price_above_sma5": true,
+        "price_above_sma10": true,
+        "price_above_sma20": true,
+        "sma5_above_sma20": true
+      },
+      "momentum": {
+        "passed": false,
+        "rsi14": 82.97,
+        "five_day_percent": 3.95,
+        "ten_day_percent": 5.25
+      },
+      "volume": {
+        "passed": true,
+        "current": 134914600,
+        "average20": 109941645,
+        "relative_volume": 1.23
+      },
+      "volatility": {
+        "atr14": 5.15
+      },
+      "paper_setup": {
+        "entry": 233.95,
+        "stop": 228.8,
+        "target": 244.25,
+        "risk_per_share": 5.15,
+        "reward_per_share": 10.3,
+        "reward_risk_ratio": 2.0,
+        "passed": false
+      },
+      "checks": {
+        "trend": true,
+        "momentum": false,
+        "volume": true,
+        "risk_reward": false
+      },
+      "reasons": [
+        "Price trend is above key short-term moving averages.",
+        "Momentum requirements are not fully confirmed.",
+        "Latest reported volume is at or above its recent average.",
+        "Paper setup does not meet the reward/risk requirement."
+      ]
+    },
+    {
+      "symbol": "AAPL",
+      "market_date": "2026-10-02",
+      "status": "PASS",
+      "score": 1,
+      "max_score": 6,
+      "price": {
+        "current": 333.69,
+        "previous_close": 330.32,
+        "daily_change_percent": 1.02
+      },
+      "trend": {
+        "passed": false,
+        "sma5": 332.966,
+        "sma10": 335.757,
+        "sma20": 331.895,
+        "sma50": 322.4162,
+        "price_above_sma5": true,
+        "price_above_sma10": false,
+        "price_above_sma20": true,
+        "sma5_above_sma20": true
+      },
+      "momentum": {
+        "passed": false,
+        "rsi14": 50.72,
+        "five_day_percent": -2.16,
+        "ten_day_percent": -0.73
+      },
+      "volume": {
+        "passed": false,
+        "current": 33245500,
+        "average20": 42433220,
+        "relative_volume": 0.78
+      },
+      "volatility": {
+        "atr14": 6.5029
+      },
+      "paper_setup": {
+        "entry": 333.69,
+        "stop": 327.1871,
+        "target": 346.6957,
+        "risk_per_share": 6.5029,
+        "reward_per_share": 13.0057,
+        "reward_risk_ratio": 2.0,
+        "passed": true
+      },
+      "checks": {
+        "trend": false,
+        "momentum": false,
+        "volume": false,
+        "risk_reward": true
+      },
+      "reasons": [
+        "Trend requirements are not fully confirmed.",
+        "Momentum requirements are not fully confirmed.",
+        "Latest reported volume is below its recent average.",
+        "Paper setup meets the 2-to-1 reward/risk rule."
+      ]
+    }
+  ],
+  "errors": []
+}
