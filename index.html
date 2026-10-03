@@ -11,296 +11,520 @@
     box-sizing: border-box;
 }
 
+:root {
+    --bg: #050913;
+    --panel: #0b1220;
+    --panel2: #101a2d;
+    --border: #24324b;
+    --text: #f5f7fb;
+    --muted: #94a3b8;
+    --green: #22c55e;
+    --green-dark: #123c26;
+    --yellow: #facc15;
+    --yellow-dark: #3d3510;
+    --red: #ef4444;
+    --red-dark: #42191c;
+    --blue: #38bdf8;
+    --purple: #a78bfa;
+}
+
 body {
     margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, #13213d 0%, #070b14 40%, #03060c 100%);
+    color: var(--text);
     font-family: Arial, Helvetica, sans-serif;
-    background: #07101d;
-    color: #ffffff;
 }
 
-header {
-    background: linear-gradient(135deg, #101f35, #07101d);
-    border-bottom: 2px solid #25d366;
-    padding: 24px 15px;
+.container {
+    width: min(1200px, 94%);
+    margin: 0 auto;
+    padding: 24px 0 50px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
     text-align: center;
+    margin-bottom: 24px;
 }
 
-header h1 {
+.header h1 {
     margin: 0;
-    font-size: clamp(25px, 5vw, 42px);
-    color: #ffffff;
+    font-size: clamp(28px, 5vw, 48px);
+    letter-spacing: 1px;
 }
 
-header p {
-    margin: 8px 0 0;
-    color: #9fb0c7;
+.header h1 span {
+    color: var(--green);
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: var(--muted);
     font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-.status-bar {
-    max-width: 1100px;
-    margin: 20px auto;
-    padding: 0 15px;
+.paper-banner {
+    margin: 18px auto 0;
+    max-width: 850px;
+    border: 1px solid #31523e;
+    background: rgba(20, 83, 45, 0.22);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #bbf7d0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   TOP STATS
+========================================================= */
+
+.stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    gap: 14px;
+    margin-bottom: 20px;
 }
 
-.status-card {
-    background: #101c2d;
-    border: 1px solid #24364e;
-    border-radius: 12px;
-    padding: 16px;
+.stat-card {
+    background: linear-gradient(180deg, #111a2c, #0a101c);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
     text-align: center;
 }
 
-.label {
-    color: #8fa3bb;
+.stat-label {
+    color: var(--muted);
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.value {
+.stat-value {
     margin-top: 7px;
-    font-size: 23px;
-    font-weight: bold;
+    font-size: 25px;
+    font-weight: 800;
 }
 
 .green {
-    color: #36df7c;
+    color: var(--green);
 }
 
 .yellow {
-    color: #ffd166;
+    color: var(--yellow);
 }
 
 .red {
-    color: #ff5d73;
+    color: var(--red);
 }
 
-.container {
-    width: 100%;
-    max-width: 1100px;
-    margin: auto;
-    padding: 0 15px 40px;
+.blue {
+    color: var(--blue);
 }
 
-.notice {
-    background: #122239;
-    border-left: 4px solid #ffd166;
-    border-radius: 8px;
-    padding: 14px 16px;
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section {
+    background: rgba(8, 14, 25, 0.92);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
     margin-bottom: 20px;
-    color: #d9e2ee;
-    line-height: 1.5;
 }
 
 .section-title {
-    margin: 28px 0 12px;
-    font-size: 20px;
-}
-
-.scanner {
-    background: #0e1a2a;
-    border: 1px solid #263952;
-    border-radius: 15px;
-    padding: 20px;
-}
-
-.scanner-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    margin-bottom: 16px;
     flex-wrap: wrap;
-    border-bottom: 1px solid #263952;
-    padding-bottom: 15px;
 }
 
-.scanner-title {
-    font-size: 21px;
-    font-weight: bold;
+.section-title h2 {
+    margin: 0;
+    font-size: 20px;
 }
 
-.scanner-state {
-    color: #ffd166;
-    font-weight: bold;
+.small {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.status-line {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   SCANNER SUMMARY
+========================================================= */
+
+.scanner-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.summary-box {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+}
+
+.summary-number {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.summary-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   TRADE CARDS
+========================================================= */
+
+.trade-list {
+    display: grid;
+    gap: 16px;
 }
 
 .trade-card {
-    margin-top: 20px;
-    background: #111f32;
-    border: 1px solid #2b405c;
-    border-radius: 14px;
-    padding: 20px;
+    border: 1px solid var(--border);
+    background: linear-gradient(145deg, #0d1627, #080d17);
+    border-radius: 15px;
+    padding: 18px;
+}
+
+.trade-card.qualified {
+    border-color: rgba(34, 197, 94, 0.55);
+}
+
+.trade-card.watch {
+    border-color: rgba(250, 204, 21, 0.45);
+}
+
+.trade-card.pass {
+    border-color: rgba(239, 68, 68, 0.40);
 }
 
 .trade-header {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
-    flex-wrap: wrap;
     align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
 }
 
-.ticker {
-    font-size: 30px;
-    font-weight: bold;
+.symbol {
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.market-date {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 3px;
 }
 
 .badge {
-    background: #4a3d13;
-    color: #ffd166;
-    border: 1px solid #7a651d;
-    border-radius: 20px;
-    padding: 7px 12px;
+    padding: 7px 11px;
+    border-radius: 999px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 800;
+    letter-spacing: .5px;
 }
 
-.trade-grid {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+.badge-qualified {
+    background: var(--green-dark);
+    color: #86efac;
+    border: 1px solid #267a48;
 }
 
-.metric {
-    background: #0b1625;
-    border-radius: 10px;
-    padding: 14px;
+.badge-watch {
+    background: var(--yellow-dark);
+    color: #fde047;
+    border: 1px solid #756719;
 }
 
-.metric-name {
-    color: #8fa3bb;
-    font-size: 12px;
+.badge-pass {
+    background: var(--red-dark);
+    color: #fca5a5;
+    border: 1px solid #7f2b30;
 }
 
-.metric-value {
+.score {
+    font-size: 13px;
+    color: var(--muted);
     margin-top: 6px;
-    font-size: 19px;
-    font-weight: bold;
+    text-align: right;
 }
 
-.checks {
-    margin-top: 20px;
+/* =========================================================
+   PRICE GRID
+========================================================= */
+
+.price-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    margin-bottom: 16px;
+}
+
+.price-box {
+    background: #0a111e;
+    border: 1px solid #1f2c42;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.price-label {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.price-value {
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+/* =========================================================
+   CHECKS
+========================================================= */
+
+.check-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .check {
-    background: #0b1625;
-    border: 1px solid #263952;
-    padding: 12px;
-    border-radius: 9px;
+    padding: 11px;
+    border-radius: 10px;
     text-align: center;
-    color: #8fa3bb;
+    font-weight: 800;
+    font-size: 13px;
 }
 
-.buttons {
-    margin-top: 20px;
+.check-pass {
+    background: rgba(34, 197, 94, .13);
+    color: #86efac;
+    border: 1px solid rgba(34, 197, 94, .35);
+}
+
+.check-fail {
+    background: rgba(239, 68, 68, .10);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, .30);
+}
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.metric {
+    background: #080e19;
+    border: 1px solid #1b273a;
+    border-radius: 10px;
+    padding: 11px;
+}
+
+.metric-name {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.metric-value {
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   REASONS
+========================================================= */
+
+.reasons {
+    background: #080d17;
+    border-radius: 10px;
+    border: 1px solid #1c2739;
+    padding: 13px 15px;
+    margin-top: 10px;
+}
+
+.reasons-title {
+    font-weight: 800;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.reason {
+    color: #cbd5e1;
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 4px 0;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
 }
 
 button {
-    flex: 1;
-    border: none;
-    border-radius: 10px;
-    padding: 14px;
-    font-size: 16px;
-    font-weight: bold;
+    border: 0;
+    border-radius: 9px;
+    padding: 11px 16px;
+    font-weight: 800;
     cursor: pointer;
+    font-size: 13px;
 }
 
-.trade-btn {
-    background: #1f9d55;
+.trade-button {
+    background: var(--green);
+    color: #04130a;
+}
+
+.pass-button {
+    background: #293548;
     color: white;
 }
 
-.trade-btn:hover {
-    background: #25b964;
+.refresh-button {
+    background: #172238;
+    color: #dbeafe;
+    border: 1px solid #30415f;
 }
 
-.pass-btn {
-    background: #2b3a4f;
-    color: white;
+button:hover {
+    filter: brightness(1.1);
 }
 
-.pass-btn:hover {
-    background: #3a4c65;
-}
+/* =========================================================
+   JOURNAL
+========================================================= */
 
-.empty {
+.journal-empty {
+    color: var(--muted);
     text-align: center;
-    padding: 35px 15px;
-    color: #8194aa;
+    padding: 20px;
 }
 
-.log {
-    background: #0e1a2a;
-    border: 1px solid #263952;
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.log-header,
-.log-row {
+.journal-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 10px;
-    padding: 13px 15px;
+    grid-template-columns: 90px 110px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    border-bottom: 1px solid #1b2637;
+    padding: 12px 4px;
+    font-size: 13px;
 }
 
-.log-header {
-    background: #14243a;
-    color: #8fa3bb;
-    font-size: 12px;
-    font-weight: bold;
+.journal-row:last-child {
+    border-bottom: none;
 }
 
-.log-row {
-    border-top: 1px solid #203149;
-    font-size: 14px;
+.journal-symbol {
+    font-weight: 800;
+    font-size: 16px;
 }
+
+.journal-action {
+    font-weight: 800;
+}
+
+/* =========================================================
+   ERROR / LOADING
+========================================================= */
+
+.message {
+    padding: 18px;
+    text-align: center;
+    color: var(--muted);
+    border: 1px dashed #334155;
+    border-radius: 12px;
+}
+
+.error-message {
+    color: #fecaca;
+    border-color: #7f1d1d;
+    background: rgba(127, 29, 29, .15);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .footer {
     text-align: center;
-    color: #647990;
+    color: #64748b;
     font-size: 12px;
-    margin-top: 35px;
-    line-height: 1.5;
+    margin-top: 28px;
+    line-height: 1.6;
 }
 
-@media (max-width: 750px) {
-    .status-bar {
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .stats-grid,
+    .scanner-summary {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .trade-grid,
-    .checks {
+    .price-grid,
+    .metrics {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .log {
-        overflow-x: auto;
-    }
-
-    .log-header,
-    .log-row {
-        min-width: 600px;
     }
 }
 
-@media (max-width: 430px) {
-    .trade-grid {
-        grid-template-columns: 1fr 1fr;
+@media (max-width: 520px) {
+
+    .stats-grid,
+    .scanner-summary,
+    .price-grid,
+    .metrics,
+    .check-grid {
+        grid-template-columns: 1fr;
     }
 
-    .buttons {
-        flex-direction: column;
+    .journal-row {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -308,381 +532,1200 @@ button {
 
 <body>
 
-<header>
-    <h1>DOC'S AI TRADING WAR ROOM</h1>
-    <p>Scan • Qualify • Decide • Track</p>
-</header>
+<div class="container">
 
-<section class="status-bar">
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-    <div class="status-card">
-        <div class="label">Paper Account</div>
-        <div class="value green" id="balance">$20.00</div>
-    </div>
+    <header class="header">
 
-    <div class="status-card">
-        <div class="label">Mode</div>
-        <div class="value yellow">PAPER</div>
-    </div>
+        <h1>
+            DOC'S <span>AI TRADING WAR ROOM</span>
+        </h1>
 
-    <div class="status-card">
-        <div class="label">Trades Taken</div>
-        <div class="value" id="tradeCount">0</div>
-    </div>
+        <div class="subtitle">
+            Scan • Qualify • Decide • Track
+        </div>
 
-    <div class="status-card">
-        <div class="label">Scanner</div>
-        <div class="value yellow" id="scannerStatus">SETUP</div>
-    </div>
+        <div class="paper-banner">
+            PAPER TRADING ONLY — No brokerage account is connected.
+            This dashboard cannot place a real order or use real money.
+            Scanner results are rule-based educational signals, not guarantees.
+        </div>
 
-</section>
+    </header>
 
-<main class="container">
 
-    <div class="notice">
-        <strong>Testing Mode:</strong>
-        This War Room is currently using a simulated $20 account.
-        No real brokerage account is connected and no real orders can be placed.
-        Live market data will be connected in the next stage.
-    </div>
+    <!-- =====================================================
+         TOP STATS
+    ====================================================== -->
 
-    <h2 class="section-title">AI Market Scanner</h2>
+    <section class="stats-grid">
 
-    <section class="scanner">
+        <div class="stat-card">
+            <div class="stat-label">Paper Account</div>
+            <div class="stat-value green" id="paperAccount">
+                $20.00
+            </div>
+        </div>
 
-        <div class="scanner-top">
+        <div class="stat-card">
+            <div class="stat-label">Mode</div>
+            <div class="stat-value blue">
+                PAPER
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Paper Trades Taken</div>
+            <div class="stat-value" id="tradesTaken">
+                0
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Scanner</div>
+            <div class="stat-value yellow" id="scannerStatus">
+                LOADING
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCANNER STATUS
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
 
             <div>
-                <div class="scanner-title">
-                    Qualified Trade Setups
-                </div>
-
-                <div style="color:#8fa3bb; margin-top:5px;">
-                    Only setups that pass our rules will appear here.
+                <h2>Scanner Control Center</h2>
+                <div class="small" id="engineName">
+                    Loading scanner engine...
                 </div>
             </div>
 
-            <div class="scanner-state" id="scanMessage">
-                WAITING FOR MARKET DATA
+            <button
+                class="refresh-button"
+                onclick="loadScanner()"
+            >
+                REFRESH SCANNER
+            </button>
+
+        </div>
+
+        <div class="status-line" id="scannerTime">
+            Waiting for scanner data...
+        </div>
+
+        <div style="height:15px;"></div>
+
+        <div class="scanner-summary">
+
+            <div class="summary-box">
+                <div
+                    class="summary-number green"
+                    id="qualifiedCount"
+                >
+                    -
+                </div>
+                <div class="summary-label">
+                    Qualified
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <div
+                    class="summary-number yellow"
+                    id="watchCount"
+                >
+                    -
+                </div>
+                <div class="summary-label">
+                    Watch
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <div
+                    class="summary-number red"
+                    id="passCount"
+                >
+                    -
+                </div>
+                <div class="summary-label">
+                    Pass
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <div
+                    class="summary-number"
+                    id="scannedCount"
+                >
+                    -
+                </div>
+                <div class="summary-label">
+                    Scanned
+                </div>
             </div>
 
         </div>
 
-        <div class="empty" id="emptyState">
-            <div style="font-size:42px;">📡</div>
+    </section>
 
-            <h3>No live scanner connected yet</h3>
 
-            <p>
-                This is intentional. We will connect a verified
-                market-data source before displaying any ticker,
-                entry price, target or stop.
-            </p>
+    <!-- =====================================================
+         QUALIFIED
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <div>
+                <h2 class="green">
+                    QUALIFIED SETUPS
+                </h2>
+                <div class="small">
+                    Trend and momentum both passed.
+                    Volume adds strength but is not mandatory.
+                </div>
+            </div>
         </div>
 
-        <div class="trade-card" id="tradeCard" style="display:none;">
+        <div
+            id="qualifiedList"
+            class="trade-list"
+        >
+            <div class="message">
+                Loading qualified setups...
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         WATCH
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <div>
+                <h2 class="yellow">
+                    WATCH LIST
+                </h2>
+                <div class="small">
+                    Something is promising, but the setup
+                    has not fully qualified.
+                </div>
+            </div>
+        </div>
+
+        <div
+            id="watchList"
+            class="trade-list"
+        >
+            <div class="message">
+                Loading watch list...
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PASS
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <div>
+                <h2 class="red">
+                    PASS
+                </h2>
+                <div class="small">
+                    Current market evidence does not meet
+                    our qualification rules.
+                </div>
+            </div>
+        </div>
+
+        <div
+            id="passList"
+            class="trade-list"
+        >
+            <div class="message">
+                Loading pass list...
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PAPER JOURNAL
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <div>
+                <h2>Paper Trade Journal</h2>
+                <div class="small">
+                    Decisions made during this browser session.
+                </div>
+            </div>
+        </div>
+
+        <div id="journal">
+            <div class="journal-empty">
+                No paper decisions yet.
+            </div>
+        </div>
+
+    </section>
+
+
+    <footer class="footer">
+
+        Doc's AI Trading War Room • Paper Testing Mode<br>
+
+        Market information may be delayed or based on the latest
+        completed daily candle. Always check the market date shown
+        on each setup.
+
+    </footer>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   DOC'S AI TRADING WAR ROOM
+   DASHBOARD v2
+
+   Reads:
+   data/scanner.json
+
+   No real brokerage connection.
+   No real orders.
+========================================================= */
+
+
+let scannerData = null;
+
+let journalEntries = [];
+
+
+/* =========================================================
+   NUMBER HELPERS
+========================================================= */
+
+function money(value) {
+
+    const number = Number(value);
+
+    if (!Number.isFinite(number)) {
+        return "—";
+    }
+
+    return "$" + number.toFixed(2);
+}
+
+
+function number(value, decimals = 2) {
+
+    const parsed = Number(value);
+
+    if (!Number.isFinite(parsed)) {
+        return "—";
+    }
+
+    return parsed.toFixed(decimals);
+}
+
+
+function percent(value) {
+
+    const parsed = Number(value);
+
+    if (!Number.isFinite(parsed)) {
+        return "—";
+    }
+
+    const sign = parsed > 0 ? "+" : "";
+
+    return sign + parsed.toFixed(2) + "%";
+}
+
+
+/* =========================================================
+   SAFE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatGeneratedTime(value) {
+
+    if (!value) {
+        return "Unknown";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    return date.toLocaleString();
+}
+
+
+/* =========================================================
+   CHECK BOX
+========================================================= */
+
+function checkBox(label, passed) {
+
+    const cssClass =
+        passed
+            ? "check check-pass"
+            : "check check-fail";
+
+    const icon =
+        passed
+            ? "✓"
+            : "✕";
+
+    return `
+        <div class="${cssClass}">
+            ${icon} ${escapeHTML(label)}
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   CREATE TRADE CARD
+========================================================= */
+
+function createTradeCard(item) {
+
+    const status =
+        String(item.status || "PASS").toUpperCase();
+
+    const statusLower =
+        status.toLowerCase();
+
+    const badgeClass =
+        status === "QUALIFIED"
+            ? "badge-qualified"
+            : status === "WATCH"
+                ? "badge-watch"
+                : "badge-pass";
+
+
+    const checks =
+        item.market_checks || {};
+
+
+    const setup =
+        item.paper_setup || {};
+
+
+    const momentum =
+        item.momentum || {};
+
+
+    const volume =
+        item.volume || {};
+
+
+    const volatility =
+        item.volatility || {};
+
+
+    const reasons =
+        Array.isArray(item.reasons)
+            ? item.reasons
+            : [];
+
+
+    const reasonsHTML =
+        reasons.length
+            ? reasons.map(reason => `
+                <div class="reason">
+                    • ${escapeHTML(reason)}
+                </div>
+              `).join("")
+            : `
+                <div class="reason">
+                    No explanation supplied.
+                </div>
+              `;
+
+
+    const actionButtons =
+        status === "QUALIFIED"
+            ? `
+                <div class="actions">
+
+                    <button
+                        class="trade-button"
+                        onclick="takePaperTrade('${escapeHTML(item.symbol)}')"
+                    >
+                        TAKE PAPER TRADE
+                    </button>
+
+                    <button
+                        class="pass-button"
+                        onclick="passSetup('${escapeHTML(item.symbol)}')"
+                    >
+                        PASS
+                    </button>
+
+                </div>
+              `
+            : "";
+
+
+    return `
+
+        <article class="trade-card ${statusLower}">
 
             <div class="trade-header">
 
                 <div>
-                    <div class="ticker" id="ticker">---</div>
 
-                    <div style="color:#8fa3bb;">
-                        AI-qualified setup
+                    <div class="symbol">
+                        ${escapeHTML(item.symbol)}
+                    </div>
+
+                    <div class="market-date">
+                        Market date:
+                        ${escapeHTML(item.market_date || "Unknown")}
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div class="badge ${badgeClass}">
+                        ${escapeHTML(status)}
+                    </div>
+
+                    <div class="score">
+                        Market Score:
+                        ${escapeHTML(item.market_score ?? "—")}
+                        /
+                        ${escapeHTML(item.max_market_score ?? "—")}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="price-grid">
+
+                <div class="price-box">
+                    <div class="price-label">
+                        Current / Latest Close
+                    </div>
+                    <div class="price-value">
+                        ${money(item.price?.current)}
                     </div>
                 </div>
 
-                <div class="badge">
-                    PAPER TRADE
+                <div class="price-box">
+                    <div class="price-label">
+                        Paper Entry
+                    </div>
+                    <div class="price-value">
+                        ${money(setup.entry)}
+                    </div>
+                </div>
+
+                <div class="price-box">
+                    <div class="price-label">
+                        Paper Stop
+                    </div>
+                    <div class="price-value red">
+                        ${money(setup.stop)}
+                    </div>
+                </div>
+
+                <div class="price-box">
+                    <div class="price-label">
+                        Paper Target
+                    </div>
+                    <div class="price-value green">
+                        ${money(setup.target)}
+                    </div>
                 </div>
 
             </div>
 
-            <div class="trade-grid">
+
+            <div class="check-grid">
+
+                ${checkBox(
+                    "TREND",
+                    Boolean(checks.trend)
+                )}
+
+                ${checkBox(
+                    "MOMENTUM",
+                    Boolean(checks.momentum)
+                )}
+
+                ${checkBox(
+                    "VOLUME",
+                    Boolean(checks.volume)
+                )}
+
+            </div>
+
+
+            <div class="metrics">
 
                 <div class="metric">
-                    <div class="metric-name">CURRENT</div>
-                    <div class="metric-value" id="currentPrice">--</div>
+                    <div class="metric-name">
+                        RSI 14
+                    </div>
+                    <div class="metric-value">
+                        ${number(momentum.rsi14)}
+                    </div>
                 </div>
 
                 <div class="metric">
-                    <div class="metric-name">ENTRY</div>
-                    <div class="metric-value" id="entryPrice">--</div>
+                    <div class="metric-name">
+                        5-Day Momentum
+                    </div>
+                    <div class="metric-value">
+                        ${percent(momentum.five_day_percent)}
+                    </div>
                 </div>
 
                 <div class="metric">
-                    <div class="metric-name">TARGET</div>
-                    <div class="metric-value green" id="targetPrice">--</div>
+                    <div class="metric-name">
+                        10-Day Momentum
+                    </div>
+                    <div class="metric-value">
+                        ${percent(momentum.ten_day_percent)}
+                    </div>
                 </div>
 
                 <div class="metric">
-                    <div class="metric-name">STOP</div>
-                    <div class="metric-value red" id="stopPrice">--</div>
+                    <div class="metric-name">
+                        Relative Volume
+                    </div>
+                    <div class="metric-value">
+                        ${number(volume.relative_volume)}x
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-name">
+                        ATR 14
+                    </div>
+                    <div class="metric-value">
+                        ${money(volatility.atr14)}
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-name">
+                        Paper R/R
+                    </div>
+                    <div class="metric-value">
+                        ${number(setup.reward_risk_ratio)} : 1
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-name">
+                        Max Paper Dollars
+                    </div>
+                    <div class="metric-value">
+                        ${money(setup.max_paper_dollars)}
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-name">
+                        Max Fractional Shares
+                    </div>
+                    <div class="metric-value">
+                        ${number(setup.max_fractional_shares, 4)}
+                    </div>
                 </div>
 
             </div>
 
-            <div class="checks">
 
-                <div class="check" id="trendCheck">
-                    TREND —
+            <div class="reasons">
+
+                <div class="reasons-title">
+                    WHY THE SCANNER CLASSIFIED IT THIS WAY
                 </div>
 
-                <div class="check" id="volumeCheck">
-                    VOLUME —
-                </div>
-
-                <div class="check" id="momentumCheck">
-                    MOMENTUM —
-                </div>
-
-                <div class="check" id="riskCheck">
-                    RISK/REWARD —
-                </div>
+                ${reasonsHTML}
 
             </div>
 
-            <div class="buttons">
+            ${actionButtons}
 
-                <button class="trade-btn" onclick="takeTrade()">
-                    TAKE PAPER TRADE
-                </button>
-
-                <button class="pass-btn" onclick="passTrade()">
-                    PASS
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <h2 class="section-title">Trade Journal</h2>
-
-    <section class="log">
-
-        <div class="log-header">
-            <div>TICKER</div>
-            <div>DECISION</div>
-            <div>ENTRY</div>
-            <div>TARGET</div>
-            <div>STOP</div>
-        </div>
-
-        <div id="tradeLog">
-
-            <div class="empty" id="logEmpty">
-                No trades recorded yet.
-            </div>
-
-        </div>
-
-    </section>
-
-    <div class="footer">
-        Doc's AI Trading War Room • Paper Trading Build<br>
-        Educational testing tool — not a guarantee of investment results.
-    </div>
-
-</main>
-
-<script>
-
-let paperBalance = 20.00;
-let tradesTaken = 0;
-let activeSetup = null;
-
-function money(number) {
-    return "$" + Number(number).toFixed(2);
-}
-
-function updateDashboard() {
-
-    document.getElementById("balance").textContent =
-        money(paperBalance);
-
-    document.getElementById("tradeCount").textContent =
-        tradesTaken;
-}
-
-
-/*
-=====================================================
-LIVE MARKET DATA WILL FEED THIS FUNCTION LATER
-=====================================================
-
-Example structure:
-
-showSetup({
-    ticker: "XYZ",
-    current: 12.42,
-    entry: 12.40,
-    target: 12.75,
-    stop: 12.25,
-    trend: true,
-    volume: true,
-    momentum: true,
-    riskReward: true
-});
-
-We deliberately DO NOT generate fake trades.
-=====================================================
-*/
-
-function showSetup(setup) {
-
-    activeSetup = setup;
-
-    document.getElementById("emptyState").style.display =
-        "none";
-
-    document.getElementById("tradeCard").style.display =
-        "block";
-
-    document.getElementById("ticker").textContent =
-        setup.ticker;
-
-    document.getElementById("currentPrice").textContent =
-        money(setup.current);
-
-    document.getElementById("entryPrice").textContent =
-        money(setup.entry);
-
-    document.getElementById("targetPrice").textContent =
-        money(setup.target);
-
-    document.getElementById("stopPrice").textContent =
-        money(setup.stop);
-
-    setCheck("trendCheck", "TREND", setup.trend);
-    setCheck("volumeCheck", "VOLUME", setup.volume);
-    setCheck("momentumCheck", "MOMENTUM", setup.momentum);
-    setCheck("riskCheck", "RISK/REWARD", setup.riskReward);
-
-    document.getElementById("scanMessage").textContent =
-        "SETUP FOUND";
-}
-
-
-function setCheck(id, label, passed) {
-
-    const element = document.getElementById(id);
-
-    if (passed) {
-
-        element.innerHTML =
-            "✓ " + label;
-
-        element.style.color =
-            "#36df7c";
-
-        element.style.borderColor =
-            "#1f9d55";
-
-    } else {
-
-        element.innerHTML =
-            "✕ " + label;
-
-        element.style.color =
-            "#ff5d73";
-
-        element.style.borderColor =
-            "#ff5d73";
-    }
-}
-
-
-function takeTrade() {
-
-    if (!activeSetup) {
-        return;
-    }
-
-    tradesTaken++;
-
-    addLog(
-        activeSetup,
-        "TRADE"
-    );
-
-    updateDashboard();
-
-    clearSetup();
-}
-
-
-function passTrade() {
-
-    if (!activeSetup) {
-        return;
-    }
-
-    addLog(
-        activeSetup,
-        "PASS"
-    );
-
-    clearSetup();
-}
-
-
-function addLog(setup, decision) {
-
-    const empty =
-        document.getElementById("logEmpty");
-
-    if (empty) {
-        empty.remove();
-    }
-
-    const row =
-        document.createElement("div");
-
-    row.className =
-        "log-row";
-
-    row.innerHTML = `
-        <div><strong>${setup.ticker}</strong></div>
-        <div class="${decision === "TRADE" ? "green" : "yellow"}">
-            ${decision}
-        </div>
-        <div>${money(setup.entry)}</div>
-        <div>${money(setup.target)}</div>
-        <div>${money(setup.stop)}</div>
-    `;
-
-    document
-        .getElementById("tradeLog")
-        .prepend(row);
-}
-
-
-function clearSetup() {
-
-    activeSetup = null;
-
-    document.getElementById("tradeCard").style.display =
-        "none";
-
-    document.getElementById("emptyState").style.display =
-        "block";
-
-    document.getElementById("scanMessage").textContent =
-        "SCANNING";
-
-    document.getElementById("emptyState").innerHTML = `
-        <div style="font-size:42px;">📡</div>
-        <h3>Waiting for the next qualified setup</h3>
-        <p>
-            No trade is better than a bad trade.
-        </p>
+        </article>
     `;
 }
 
 
-updateDashboard();
+/* =========================================================
+   RENDER LIST
+========================================================= */
+
+function renderList(
+    elementId,
+    items,
+    emptyMessage
+) {
+
+    const element =
+        document.getElementById(elementId);
+
+
+    if (!items.length) {
+
+        element.innerHTML = `
+            <div class="message">
+                ${escapeHTML(emptyMessage)}
+            </div>
+        `;
+
+        return;
+    }
+
+
+    element.innerHTML =
+        items
+            .map(createTradeCard)
+            .join("");
+}
+
+
+/* =========================================================
+   RENDER SCANNER
+========================================================= */
+
+function renderScanner(data) {
+
+    scannerData = data;
+
+
+    const summary =
+        data.summary || {};
+
+
+    const results =
+        Array.isArray(data.results)
+            ? data.results
+            : [];
+
+
+    const qualified =
+        results.filter(
+            item =>
+                item.status === "QUALIFIED"
+        );
+
+
+    const watch =
+        results.filter(
+            item =>
+                item.status === "WATCH"
+        );
+
+
+    const pass =
+        results.filter(
+            item =>
+                item.status === "PASS"
+        );
+
+
+    document.getElementById(
+        "paperAccount"
+    ).textContent =
+        money(
+            data.paper_account ?? 20
+        );
+
+
+    document.getElementById(
+        "scannerStatus"
+    ).textContent =
+        qualified.length > 0
+            ? "SETUP"
+            : "WAIT";
+
+
+    document.getElementById(
+        "scannerStatus"
+    ).className =
+        qualified.length > 0
+            ? "stat-value green"
+            : "stat-value yellow";
+
+
+    document.getElementById(
+        "engineName"
+    ).textContent =
+        data.engine ||
+        "Scanner engine";
+
+
+    document.getElementById(
+        "scannerTime"
+    ).textContent =
+        "Scanner generated: "
+        + formatGeneratedTime(
+            data.generated_at
+        )
+        + " • Source: "
+        + (data.source || "Unknown")
+        + " • Mode: "
+        + String(
+            data.mode || "paper"
+        ).toUpperCase();
+
+
+    document.getElementById(
+        "qualifiedCount"
+    ).textContent =
+        summary.qualified ??
+        qualified.length;
+
+
+    document.getElementById(
+        "watchCount"
+    ).textContent =
+        summary.watch ??
+        watch.length;
+
+
+    document.getElementById(
+        "passCount"
+    ).textContent =
+        summary.pass ??
+        pass.length;
+
+
+    document.getElementById(
+        "scannedCount"
+    ).textContent =
+        summary.symbols_scanned ??
+        results.length;
+
+
+    renderList(
+        "qualifiedList",
+        qualified,
+        "No qualified setups right now. No setup = no trade."
+    );
+
+
+    renderList(
+        "watchList",
+        watch,
+        "Nothing is currently on watch."
+    );
+
+
+    renderList(
+        "passList",
+        pass,
+        "No symbols are currently classified as PASS."
+    );
+}
+
+
+/* =========================================================
+   LOAD SCANNER JSON
+========================================================= */
+
+async function loadScanner() {
+
+    document.getElementById(
+        "scannerStatus"
+    ).textContent =
+        "LOADING";
+
+
+    document.getElementById(
+        "scannerStatus"
+    ).className =
+        "stat-value yellow";
+
+
+    try {
+
+        /*
+            Cache-busting timestamp makes the browser
+            ask GitHub Pages for the latest scanner file.
+        */
+
+        const url =
+            "data/scanner.json?t="
+            + Date.now();
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Scanner file returned HTTP "
+                + response.status
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data ||
+            !Array.isArray(data.results)
+        ) {
+
+            throw new Error(
+                "scanner.json does not contain valid results."
+            );
+        }
+
+
+        renderScanner(data);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Scanner loading error:",
+            error
+        );
+
+
+        document.getElementById(
+            "scannerStatus"
+        ).textContent =
+            "ERROR";
+
+
+        document.getElementById(
+            "scannerStatus"
+        ).className =
+            "stat-value red";
+
+
+        document.getElementById(
+            "engineName"
+        ).textContent =
+            "Scanner data could not be loaded.";
+
+
+        document.getElementById(
+            "scannerTime"
+        ).textContent =
+            error.message;
+
+
+        const errorHTML = `
+            <div class="message error-message">
+                Scanner data is unavailable.
+                The dashboard will not invent or
+                substitute a trade setup.
+            </div>
+        `;
+
+
+        document.getElementById(
+            "qualifiedList"
+        ).innerHTML =
+            errorHTML;
+
+
+        document.getElementById(
+            "watchList"
+        ).innerHTML =
+            errorHTML;
+
+
+        document.getElementById(
+            "passList"
+        ).innerHTML =
+            errorHTML;
+    }
+}
+
+
+/* =========================================================
+   FIND SYMBOL
+========================================================= */
+
+function findSymbol(symbol) {
+
+    if (
+        !scannerData ||
+        !Array.isArray(scannerData.results)
+    ) {
+        return null;
+    }
+
+
+    return scannerData.results.find(
+        item =>
+            item.symbol === symbol
+    ) || null;
+}
+
+
+/* =========================================================
+   TAKE PAPER TRADE
+========================================================= */
+
+function takePaperTrade(symbol) {
+
+    const item =
+        findSymbol(symbol);
+
+
+    if (!item) {
+
+        alert(
+            "That setup could not be found."
+        );
+
+        return;
+    }
+
+
+    if (
+        item.status !== "QUALIFIED"
+    ) {
+
+        alert(
+            "Only QUALIFIED setups can be "
+            + "entered as paper trades."
+        );
+
+        return;
+    }
+
+
+    const setup =
+        item.paper_setup || {};
+
+
+    journalEntries.unshift({
+
+        time:
+            new Date()
+                .toLocaleTimeString(
+                    [],
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                ),
+
+        symbol:
+            item.symbol,
+
+        action:
+            "PAPER TRADE",
+
+        entry:
+            setup.entry,
+
+        stop:
+            setup.stop,
+
+        target:
+            setup.target
+    });
+
+
+    updateJournal();
+
+
+    alert(
+        item.symbol
+        + " added to the PAPER journal.\n\n"
+        + "No real order was placed."
+    );
+}
+
+
+/* =========================================================
+   PASS SETUP
+========================================================= */
+
+function passSetup(symbol) {
+
+    const item =
+        findSymbol(symbol);
+
+
+    if (!item) {
+        return;
+    }
+
+
+    journalEntries.unshift({
+
+        time:
+            new Date()
+                .toLocaleTimeString(
+                    [],
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                ),
+
+        symbol:
+            item.symbol,
+
+        action:
+            "PASS",
+
+        entry:
+            item.paper_setup?.entry,
+
+        stop:
+            item.paper_setup?.stop,
+
+        target:
+            item.paper_setup?.target
+    });
+
+
+    updateJournal();
+}
+
+
+/* =========================================================
+   JOURNAL
+========================================================= */
+
+function updateJournal() {
+
+    const journal =
+        document.getElementById(
+            "journal"
+        );
+
+
+    const paperTrades =
+        journalEntries.filter(
+            entry =>
+                entry.action ===
+                "PAPER TRADE"
+        ).length;
+
+
+    document.getElementById(
+        "tradesTaken"
+    ).textContent =
+        paperTrades;
+
+
+    if (!journalEntries.length) {
+
+        journal.innerHTML = `
+            <div class="journal-empty">
+                No paper decisions yet.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    journal.innerHTML =
+        journalEntries.map(entry => {
+
+            const actionClass =
+                entry.action === "PAPER TRADE"
+                    ? "green"
+                    : "red";
+
+
+            return `
+
+                <div class="journal-row">
+
+                    <div>
+                        ${escapeHTML(entry.time)}
+                    </div>
+
+                    <div class="journal-symbol">
+                        ${escapeHTML(entry.symbol)}
+                    </div>
+
+                    <div>
+                        Entry ${money(entry.entry)}
+                        • Stop ${money(entry.stop)}
+                        • Target ${money(entry.target)}
+                    </div>
+
+                    <div class="journal-action ${actionClass}">
+                        ${escapeHTML(entry.action)}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================================
+   START WAR ROOM
+========================================================= */
+
+loadScanner();
 
 </script>
 
