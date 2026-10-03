@@ -1,0 +1,1338 @@
+name: Trading Scanner
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Weekdays, every 30 minutes during a broad
+    # window covering U.S. market hours.
+    - cron: "*/30 13-21 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trading-scanner
+  cancel-in-progress: false
+
+jobs:
+  run-scanner:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # ======================================================
+      # 1. CHECK OUT REPOSITORY
+      # ======================================================
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      # ======================================================
+      # 2. VERIFY SECRET
+      # ======================================================
+
+      - name: Verify Twelve Data API key
+        env:
+          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        run: |
+          if [ -z "$TWELVE_DATA_API_KEY" ]; then
+            echo "ERROR: TWELVE_DATA_API_KEY is missing."
+            exit 1
+          fi
+
+          echo "Twelve Data API key found."
+
+
+      # ======================================================
+      # 3. CREATE DATA DIRECTORY
+      # ======================================================
+
+      - name: Create data directory
+        run: |
+          mkdir -p data
+
+
+      # ======================================================
+      # 4. RUN SCANNER ENGINE
+      # ======================================================
+
+      - name: Run scanner
+        env:
+          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        run: |
+          python3 <<'PY'
+
+          import json
+          import math
+          import os
+          import sys
+          import urllib.parse
+          import urllib.request
+
+          from datetime import datetime, timezone
+
+
+          # ==================================================
+          # SETTINGS
+          # ==================================================
+
+          API_KEY = os.environ["TWELVE_DATA_API_KEY"]
+
+          SYMBOLS = [
+              "SPY",
+              "QQQ",
+              "AAPL",
+              "MSFT",
+              "NVDA"
+          ]
+
+          OUTPUT_SIZE = 60
+
+
+          # ==================================================
+          # HELPERS
+          # ==================================================
+
+          def safe_float(value, default=0.0):
+
+              try:
+                  return float(value)
+
+              except (TypeError, ValueError):
+                  return default
+
+
+          def round_number(value, places=2):
+
+              if value is None:
+                  return None
+
+              if isinstance(value, float):
+
+                  if math.isnan(value):
+                      return None
+
+                  if math.isinf(value):
+                      return None
+
+              return round(value, places)
+
+
+          def average(values):
+
+              if not values:
+                  return 0.0
+
+              return sum(values) / len(values)
+
+
+          def sma(values, period):
+
+              if len(values) < period:
+                  return None
+
+              return average(values[-period:])
+
+
+          def percent_change(old, new):
+
+              if old == 0:
+                  return 0.0
+
+              return (
+                  (new - old) / old
+              ) * 100
+
+
+          # ==================================================
+          # RSI
+          # ==================================================
+
+          def calculate_rsi(closes, period=14):
+
+              if len(closes) < period + 1:
+                  return None
+
+              gains = []
+              losses = []
+
+              recent = closes[-(period + 1):]
+
+              for index in range(
+                  1,
+                  len(recent)
+              ):
+
+                  change = (
+                      recent[index]
+                      - recent[index - 1]
+                  )
+
+                  if change > 0:
+
+                      gains.append(change)
+                      losses.append(0.0)
+
+                  else:
+
+                      gains.append(0.0)
+                      losses.append(abs(change))
+
+              avg_gain = average(gains)
+              avg_loss = average(losses)
+
+              if avg_loss == 0:
+
+                  if avg_gain == 0:
+                      return 50.0
+
+                  return 100.0
+
+              relative_strength = (
+                  avg_gain / avg_loss
+              )
+
+              rsi = (
+                  100
+                  - (
+                      100
+                      / (
+                          1
+                          + relative_strength
+                      )
+                  )
+              )
+
+              return rsi
+
+
+          # ==================================================
+          # ATR
+          # ==================================================
+
+          def calculate_atr(
+              highs,
+              lows,
+              closes,
+              period=14
+          ):
+
+              if len(closes) < period + 1:
+                  return None
+
+              true_ranges = []
+
+              start = (
+                  len(closes)
+                  - period
+              )
+
+              for index in range(
+                  start,
+                  len(closes)
+              ):
+
+                  current_high = highs[index]
+                  current_low = lows[index]
+
+                  previous_close = (
+                      closes[index - 1]
+                  )
+
+                  true_range = max(
+
+                      current_high
+                      - current_low,
+
+                      abs(
+                          current_high
+                          - previous_close
+                      ),
+
+                      abs(
+                          current_low
+                          - previous_close
+                      )
+                  )
+
+                  true_ranges.append(
+                      true_range
+                  )
+
+              return average(
+                  true_ranges
+              )
+
+
+          # ==================================================
+          # TWELVE DATA REQUEST
+          # ==================================================
+
+          def get_daily_history(symbol):
+
+              params = urllib.parse.urlencode({
+
+                  "symbol":
+                      symbol,
+
+                  "interval":
+                      "1day",
+
+                  "outputsize":
+                      OUTPUT_SIZE,
+
+                  "order":
+                      "ASC",
+
+                  "apikey":
+                      API_KEY
+              })
+
+              url = (
+                  "https://api.twelvedata.com/"
+                  "time_series?"
+                  + params
+              )
+
+              request = urllib.request.Request(
+
+                  url,
+
+                  headers={
+                      "User-Agent":
+                          "Docs-AI-Trading-War-Room/1.0"
+                  }
+              )
+
+              with urllib.request.urlopen(
+                  request,
+                  timeout=30
+              ) as response:
+
+                  return json.loads(
+                      response
+                      .read()
+                      .decode("utf-8")
+                  )
+
+
+          # ==================================================
+          # ANALYZE ONE SYMBOL
+          # ==================================================
+
+          def analyze_symbol(
+              symbol,
+              payload
+          ):
+
+              values = payload.get(
+                  "values",
+                  []
+              )
+
+              if len(values) < 25:
+
+                  raise ValueError(
+                      "Not enough price history."
+                  )
+
+
+              dates = []
+
+              opens = []
+
+              highs = []
+
+              lows = []
+
+              closes = []
+
+              volumes = []
+
+
+              for candle in values:
+
+                  dates.append(
+                      candle.get(
+                          "datetime",
+                          ""
+                      )
+                  )
+
+                  opens.append(
+                      safe_float(
+                          candle.get("open")
+                      )
+                  )
+
+                  highs.append(
+                      safe_float(
+                          candle.get("high")
+                      )
+                  )
+
+                  lows.append(
+                      safe_float(
+                          candle.get("low")
+                      )
+                  )
+
+                  closes.append(
+                      safe_float(
+                          candle.get("close")
+                      )
+                  )
+
+                  volumes.append(
+                      safe_float(
+                          candle.get("volume")
+                      )
+                  )
+
+
+              current = closes[-1]
+
+              previous = closes[-2]
+
+
+              # ==============================================
+              # MOVING AVERAGES
+              # ==============================================
+
+              sma5 = sma(
+                  closes,
+                  5
+              )
+
+              sma10 = sma(
+                  closes,
+                  10
+              )
+
+              sma20 = sma(
+                  closes,
+                  20
+              )
+
+              sma50 = sma(
+                  closes,
+                  50
+              )
+
+
+              # ==============================================
+              # MOMENTUM
+              # ==============================================
+
+              rsi14 = calculate_rsi(
+                  closes,
+                  14
+              )
+
+              momentum_5d = (
+                  percent_change(
+                      closes[-6],
+                      current
+                  )
+                  if len(closes) >= 6
+                  else 0
+              )
+
+              momentum_10d = (
+                  percent_change(
+                      closes[-11],
+                      current
+                  )
+                  if len(closes) >= 11
+                  else 0
+              )
+
+
+              # ==============================================
+              # VOLUME
+              # ==============================================
+
+              current_volume = (
+                  volumes[-1]
+              )
+
+              prior_volumes = (
+                  volumes[-21:-1]
+              )
+
+              average_volume_20 = (
+                  average(
+                      prior_volumes
+                  )
+              )
+
+              relative_volume = (
+
+                  current_volume
+                  / average_volume_20
+
+                  if average_volume_20 > 0
+                  else 0
+              )
+
+
+              # ==============================================
+              # VOLATILITY / ATR
+              # ==============================================
+
+              atr14 = calculate_atr(
+
+                  highs,
+                  lows,
+                  closes,
+                  14
+              )
+
+
+              # ==============================================
+              # TREND RULES
+              # ==============================================
+
+              price_above_sma5 = (
+                  sma5 is not None
+                  and current > sma5
+              )
+
+              price_above_sma10 = (
+                  sma10 is not None
+                  and current > sma10
+              )
+
+              price_above_sma20 = (
+                  sma20 is not None
+                  and current > sma20
+              )
+
+              sma5_above_sma20 = (
+                  sma5 is not None
+                  and sma20 is not None
+                  and sma5 > sma20
+              )
+
+              trend_pass = (
+
+                  price_above_sma10
+                  and price_above_sma20
+                  and sma5_above_sma20
+              )
+
+
+              # ==============================================
+              # MOMENTUM RULES
+              #
+              # Avoid requiring RSI to be extremely high.
+              # We want positive momentum without blindly
+              # chasing an overheated move.
+              # ==============================================
+
+              rsi_pass = (
+
+                  rsi14 is not None
+                  and rsi14 >= 50
+                  and rsi14 <= 72
+              )
+
+              momentum_pass = (
+
+                  momentum_5d > 0
+                  and momentum_10d > 0
+                  and rsi_pass
+              )
+
+
+              # ==============================================
+              # VOLUME RULE
+              #
+              # Daily candles can be incomplete while the
+              # market is open, so volume does NOT decide
+              # qualification by itself in this first build.
+              # ==============================================
+
+              volume_pass = (
+                  relative_volume >= 1.0
+              )
+
+
+              # ==============================================
+              # ENTRY / STOP / TARGET MODEL
+              #
+              # PAPER-TEST MODEL ONLY.
+              #
+              # Entry = latest close
+              # Stop  = 1 ATR below entry
+              # Target = 2 ATR above entry
+              #
+              # This creates a nominal 2:1 reward/risk
+              # structure for testing.
+              # ==============================================
+
+              if (
+                  atr14 is not None
+                  and atr14 > 0
+              ):
+
+                  entry = current
+
+                  stop = (
+                      entry
+                      - atr14
+                  )
+
+                  target = (
+                      entry
+                      + (
+                          atr14 * 2
+                      )
+                  )
+
+                  risk_per_share = (
+                      entry
+                      - stop
+                  )
+
+                  reward_per_share = (
+                      target
+                      - entry
+                  )
+
+                  risk_reward = (
+
+                      reward_per_share
+                      / risk_per_share
+
+                      if risk_per_share > 0
+                      else 0
+                  )
+
+              else:
+
+                  entry = current
+                  stop = None
+                  target = None
+                  risk_per_share = None
+                  reward_per_share = None
+                  risk_reward = 0
+
+
+              risk_reward_pass = (
+                  risk_reward >= 2
+              )
+
+
+              # ==============================================
+              # SCORE
+              #
+              # Trend       2 points
+              # Momentum    2 points
+              # Volume      1 point
+              # Risk/Reward 1 point
+              #
+              # 5-6 = QUALIFIED
+              # 3-4 = WATCH
+              # 0-2 = PASS
+              #
+              # Qualification also requires trend,
+              # momentum and risk/reward to pass.
+              # ==============================================
+
+              score = 0
+
+
+              if trend_pass:
+                  score += 2
+
+
+              if momentum_pass:
+                  score += 2
+
+
+              if volume_pass:
+                  score += 1
+
+
+              if risk_reward_pass:
+                  score += 1
+
+
+              if (
+                  score >= 5
+                  and trend_pass
+                  and momentum_pass
+                  and risk_reward_pass
+              ):
+
+                  status = "QUALIFIED"
+
+
+              elif score >= 3:
+
+                  status = "WATCH"
+
+
+              else:
+
+                  status = "PASS"
+
+
+              # ==============================================
+              # REASONS
+              # ==============================================
+
+              reasons = []
+
+
+              if trend_pass:
+
+                  reasons.append(
+                      "Price trend is above key "
+                      "short-term moving averages."
+                  )
+
+              else:
+
+                  reasons.append(
+                      "Trend requirements are "
+                      "not fully confirmed."
+                  )
+
+
+              if momentum_pass:
+
+                  reasons.append(
+                      "5-day and 10-day momentum "
+                      "are positive with RSI in "
+                      "the accepted range."
+                  )
+
+              else:
+
+                  reasons.append(
+                      "Momentum requirements are "
+                      "not fully confirmed."
+                  )
+
+
+              if volume_pass:
+
+                  reasons.append(
+                      "Latest reported volume is "
+                      "at or above its recent average."
+                  )
+
+              else:
+
+                  reasons.append(
+                      "Latest reported volume is "
+                      "below its recent average."
+                  )
+
+
+              if risk_reward_pass:
+
+                  reasons.append(
+                      "Paper setup meets the "
+                      "2-to-1 reward/risk rule."
+                  )
+
+              else:
+
+                  reasons.append(
+                      "Paper setup does not meet "
+                      "the reward/risk requirement."
+                  )
+
+
+              # ==============================================
+              # OUTPUT
+              # ==============================================
+
+              return {
+
+                  "symbol":
+                      symbol,
+
+                  "market_date":
+                      dates[-1],
+
+                  "status":
+                      status,
+
+                  "score":
+                      score,
+
+                  "max_score":
+                      6,
+
+                  "price": {
+                      "current":
+                          round_number(
+                              current,
+                              4
+                          ),
+
+                      "previous_close":
+                          round_number(
+                              previous,
+                              4
+                          ),
+
+                      "daily_change_percent":
+                          round_number(
+                              percent_change(
+                                  previous,
+                                  current
+                              ),
+                              2
+                          )
+                  },
+
+                  "trend": {
+
+                      "passed":
+                          trend_pass,
+
+                      "sma5":
+                          round_number(
+                              sma5,
+                              4
+                          ),
+
+                      "sma10":
+                          round_number(
+                              sma10,
+                              4
+                          ),
+
+                      "sma20":
+                          round_number(
+                              sma20,
+                              4
+                          ),
+
+                      "sma50":
+                          round_number(
+                              sma50,
+                              4
+                          ),
+
+                      "price_above_sma5":
+                          price_above_sma5,
+
+                      "price_above_sma10":
+                          price_above_sma10,
+
+                      "price_above_sma20":
+                          price_above_sma20,
+
+                      "sma5_above_sma20":
+                          sma5_above_sma20
+                  },
+
+                  "momentum": {
+
+                      "passed":
+                          momentum_pass,
+
+                      "rsi14":
+                          round_number(
+                              rsi14,
+                              2
+                          ),
+
+                      "five_day_percent":
+                          round_number(
+                              momentum_5d,
+                              2
+                          ),
+
+                      "ten_day_percent":
+                          round_number(
+                              momentum_10d,
+                              2
+                          )
+                  },
+
+                  "volume": {
+
+                      "passed":
+                          volume_pass,
+
+                      "current":
+                          int(
+                              current_volume
+                          ),
+
+                      "average20":
+                          int(
+                              average_volume_20
+                          ),
+
+                      "relative_volume":
+                          round_number(
+                              relative_volume,
+                              2
+                          )
+                  },
+
+                  "volatility": {
+
+                      "atr14":
+                          round_number(
+                              atr14,
+                              4
+                          )
+                  },
+
+                  "paper_setup": {
+
+                      "entry":
+                          round_number(
+                              entry,
+                              4
+                          ),
+
+                      "stop":
+                          round_number(
+                              stop,
+                              4
+                          ),
+
+                      "target":
+                          round_number(
+                              target,
+                              4
+                          ),
+
+                      "risk_per_share":
+                          round_number(
+                              risk_per_share,
+                              4
+                          ),
+
+                      "reward_per_share":
+                          round_number(
+                              reward_per_share,
+                              4
+                          ),
+
+                      "reward_risk_ratio":
+                          round_number(
+                              risk_reward,
+                              2
+                          ),
+
+                      "passed":
+                          risk_reward_pass
+                  },
+
+                  "checks": {
+
+                      "trend":
+                          trend_pass,
+
+                      "momentum":
+                          momentum_pass,
+
+                      "volume":
+                          volume_pass,
+
+                      "risk_reward":
+                          risk_reward_pass
+                  },
+
+                  "reasons":
+                      reasons
+              }
+
+
+          # ==================================================
+          # MAIN
+          # ==================================================
+
+          results = []
+
+          errors = []
+
+
+          for symbol in SYMBOLS:
+
+              print()
+              print(
+                  "================================"
+              )
+
+              print(
+                  f"Scanning {symbol}"
+              )
+
+              print(
+                  "================================"
+              )
+
+
+              try:
+
+                  payload = (
+                      get_daily_history(
+                          symbol
+                      )
+                  )
+
+
+                  if (
+                      payload.get("status")
+                      == "error"
+                  ):
+
+                      raise ValueError(
+                          payload.get(
+                              "message",
+                              "Unknown Twelve Data error"
+                          )
+                      )
+
+
+                  result = analyze_symbol(
+                      symbol,
+                      payload
+                  )
+
+
+                  results.append(
+                      result
+                  )
+
+
+                  print(
+                      symbol,
+                      "=>",
+                      result["status"],
+                      "| Score:",
+                      f"{result['score']}/"
+                      f"{result['max_score']}"
+                  )
+
+
+              except Exception as exc:
+
+                  print(
+                      f"ERROR scanning "
+                      f"{symbol}: {exc}"
+                  )
+
+
+                  errors.append({
+
+                      "symbol":
+                          symbol,
+
+                      "message":
+                          str(exc)
+                  })
+
+
+          # ==================================================
+          # SORT
+          #
+          # Highest score first.
+          # Qualified setups naturally rise to the top.
+          # ==================================================
+
+          status_priority = {
+
+              "QUALIFIED": 3,
+
+              "WATCH": 2,
+
+              "PASS": 1
+          }
+
+
+          results.sort(
+
+              key=lambda item: (
+
+                  status_priority.get(
+                      item["status"],
+                      0
+                  ),
+
+                  item["score"],
+
+                  item["momentum"][
+                      "five_day_percent"
+                  ]
+              ),
+
+              reverse=True
+          )
+
+
+          qualified_count = sum(
+
+              1
+
+              for item in results
+
+              if item["status"]
+              == "QUALIFIED"
+          )
+
+
+          watch_count = sum(
+
+              1
+
+              for item in results
+
+              if item["status"]
+              == "WATCH"
+          )
+
+
+          pass_count = sum(
+
+              1
+
+              for item in results
+
+              if item["status"]
+              == "PASS"
+          )
+
+
+          output = {
+
+              "generated_at":
+                  datetime.now(
+                      timezone.utc
+                  ).isoformat(),
+
+              "source":
+                  "Twelve Data",
+
+              "mode":
+                  "paper",
+
+              "engine":
+                  "Doc's Scanner v1",
+
+              "rules": {
+
+                  "trend":
+                      "Price above SMA10 and SMA20, "
+                      "with SMA5 above SMA20.",
+
+                  "momentum":
+                      "Positive 5-day and 10-day "
+                      "momentum with RSI14 between "
+                      "50 and 72.",
+
+                  "volume":
+                      "Latest reported volume at or "
+                      "above the prior 20-session "
+                      "average.",
+
+                  "paper_stop":
+                      "Entry minus 1 ATR.",
+
+                  "paper_target":
+                      "Entry plus 2 ATR.",
+
+                  "minimum_reward_risk":
+                      2.0
+              },
+
+              "summary": {
+
+                  "symbols_requested":
+                      len(SYMBOLS),
+
+                  "symbols_scanned":
+                      len(results),
+
+                  "qualified":
+                      qualified_count,
+
+                  "watch":
+                      watch_count,
+
+                  "pass":
+                      pass_count,
+
+                  "errors":
+                      len(errors)
+              },
+
+              "results":
+                  results,
+
+              "errors":
+                  errors
+          }
+
+
+          # Do NOT overwrite a working scanner file
+          # if every API request failed.
+
+          if len(results) == 0:
+
+              print()
+              print(
+                  "ERROR: No symbols were "
+                  "successfully scanned."
+              )
+
+              sys.exit(1)
+
+
+          with open(
+
+              "data/scanner.json",
+
+              "w",
+
+              encoding="utf-8"
+
+          ) as file:
+
+              json.dump(
+
+                  output,
+
+                  file,
+
+                  indent=2
+              )
+
+
+          print()
+          print(
+              "================================"
+          )
+
+          print(
+              "SCAN COMPLETE"
+          )
+
+          print(
+              "================================"
+          )
+
+          print(
+              "Scanned:",
+              len(results)
+          )
+
+          print(
+              "Qualified:",
+              qualified_count
+          )
+
+          print(
+              "Watch:",
+              watch_count
+          )
+
+          print(
+              "Pass:",
+              pass_count
+          )
+
+          print(
+              "Errors:",
+              len(errors)
+          )
+
+          print()
+          print(
+              "Saved to data/scanner.json"
+          )
+
+          PY
+
+
+      # ======================================================
+      # 5. VERIFY OUTPUT
+      # ======================================================
+
+      - name: Verify scanner output
+        run: |
+          python3 <<'PY'
+
+          import json
+
+
+          with open(
+              "data/scanner.json",
+              "r",
+              encoding="utf-8"
+          ) as file:
+
+              data = json.load(file)
+
+
+          print(
+              "Engine:",
+              data.get("engine")
+          )
+
+          print(
+              "Generated:",
+              data.get("generated_at")
+          )
+
+          print()
+
+
+          for item in data.get(
+              "results",
+              []
+          ):
+
+              print(
+                  item["symbol"],
+                  "|",
+                  item["status"],
+                  "|",
+                  f"{item['score']}/"
+                  f"{item['max_score']}",
+                  "| Price:",
+                  item["price"]["current"]
+              )
+
+          PY
+
+
+      # ======================================================
+      # 6. COMMIT SCANNER RESULTS
+      # ======================================================
+
+      - name: Commit scanner results
+        run: |
+          git config \
+            user.name \
+            "github-actions[bot]"
+
+          git config \
+            user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/scanner.json
+
+          if git diff --cached --quiet; then
+            echo "No scanner changes to commit."
+            exit 0
+          fi
+
+          git commit \
+            -m "Update trading scanner"
+
+          git push
