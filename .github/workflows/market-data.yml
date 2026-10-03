@@ -1,0 +1,368 @@
+name: Update Market Data
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # GitHub Actions schedules use UTC.
+    # During U.S. market hours this runs every 15 minutes
+    # across a broad enough UTC window to cover Eastern Time.
+    - cron: "*/15 13-21 * * 1-5"
+
+permissions:
+  contents: write
+
+jobs:
+  update-market-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      # -------------------------------------------------------
+      # 1. CHECK OUT THE REPOSITORY
+      # -------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -------------------------------------------------------
+      # 2. VERIFY THAT THE SECRET EXISTS
+      # -------------------------------------------------------
+      - name: Verify API key
+        env:
+          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        run: |
+          if [ -z "$TWELVE_DATA_API_KEY" ]; then
+            echo "ERROR: TWELVE_DATA_API_KEY is missing."
+            exit 1
+          fi
+
+          echo "API key found."
+
+      # -------------------------------------------------------
+      # 3. CREATE DATA FOLDER
+      # -------------------------------------------------------
+      - name: Create data folder
+        run: |
+          mkdir -p data
+
+      # -------------------------------------------------------
+      # 4. DOWNLOAD MARKET QUOTES
+      #
+      # FIRST TEST WATCHLIST:
+      # SPY  = S&P 500 ETF
+      # QQQ  = Nasdaq-100 ETF
+      # AAPL = Apple
+      # MSFT = Microsoft
+      # NVDA = NVIDIA
+      #
+      # We start small so we can verify the feed before
+      # expanding the scanner.
+      # -------------------------------------------------------
+      - name: Download market data
+        env:
+          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        run: |
+          python3 <<'PY'
+          import json
+          import os
+          import sys
+          import urllib.parse
+          import urllib.request
+          from datetime import datetime, timezone
+
+          API_KEY = os.environ["TWELVE_DATA_API_KEY"]
+
+          SYMBOLS = [
+              "SPY",
+              "QQQ",
+              "AAPL",
+              "MSFT",
+              "NVDA"
+          ]
+
+          output = {
+              "generated_at": datetime.now(timezone.utc).isoformat(),
+              "source": "Twelve Data",
+              "mode": "paper",
+              "quotes": {}
+          }
+
+          def fetch_quote(symbol):
+              params = urllib.parse.urlencode({
+                  "symbol": symbol,
+                  "apikey": API_KEY
+              })
+
+              url = (
+                  "https://api.twelvedata.com/quote?"
+                  + params
+              )
+
+              request = urllib.request.Request(
+                  url,
+                  headers={
+                      "User-Agent":
+                      "Docs-AI-Trading-War-Room/1.0"
+                  }
+              )
+
+              with urllib.request.urlopen(
+                  request,
+                  timeout=30
+              ) as response:
+                  return json.loads(
+                      response.read().decode("utf-8")
+                  )
+
+          errors = []
+
+          for symbol in SYMBOLS:
+
+              print(f"Requesting {symbol}...")
+
+              try:
+                  data = fetch_quote(symbol)
+
+              except Exception as exc:
+                  print(
+                      f"ERROR requesting {symbol}: {exc}"
+                  )
+                  errors.append(
+                      {
+                          "symbol": symbol,
+                          "message": str(exc)
+                      }
+                  )
+                  continue
+
+              # Twelve Data returns a status/error object
+              # when a request cannot be completed.
+              if data.get("status") == "error":
+                  message = data.get(
+                      "message",
+                      "Unknown Twelve Data error"
+                  )
+
+                  print(
+                      f"Twelve Data error for "
+                      f"{symbol}: {message}"
+                  )
+
+                  errors.append(
+                      {
+                          "symbol": symbol,
+                          "message": message
+                      }
+                  )
+
+                  continue
+
+              try:
+                  output["quotes"][symbol] = {
+                      "symbol":
+                          data.get(
+                              "symbol",
+                              symbol
+                          ),
+
+                      "name":
+                          data.get(
+                              "name",
+                              ""
+                          ),
+
+                      "exchange":
+                          data.get(
+                              "exchange",
+                              ""
+                          ),
+
+                      "currency":
+                          data.get(
+                              "currency",
+                              "USD"
+                          ),
+
+                      "datetime":
+                          data.get(
+                              "datetime",
+                              ""
+                          ),
+
+                      "open":
+                          float(
+                              data.get("open") or 0
+                          ),
+
+                      "high":
+                          float(
+                              data.get("high") or 0
+                          ),
+
+                      "low":
+                          float(
+                              data.get("low") or 0
+                          ),
+
+                      "close":
+                          float(
+                              data.get("close") or 0
+                          ),
+
+                      "previous_close":
+                          float(
+                              data.get(
+                                  "previous_close"
+                              ) or 0
+                          ),
+
+                      "change":
+                          float(
+                              data.get("change") or 0
+                          ),
+
+                      "percent_change":
+                          float(
+                              data.get(
+                                  "percent_change"
+                              ) or 0
+                          ),
+
+                      "volume":
+                          int(
+                              float(
+                                  data.get(
+                                      "volume"
+                                  ) or 0
+                              )
+                          )
+                  }
+
+                  print(
+                      f"{symbol}: "
+                      f"${output['quotes'][symbol]['close']:.2f}"
+                  )
+
+              except Exception as exc:
+
+                  print(
+                      f"ERROR processing {symbol}: {exc}"
+                  )
+
+                  errors.append(
+                      {
+                          "symbol": symbol,
+                          "message":
+                              "Could not process quote"
+                      }
+                  )
+
+          output["errors"] = errors
+
+          quote_count = len(
+              output["quotes"]
+          )
+
+          output["quote_count"] = quote_count
+
+          # We want the workflow to fail if ZERO
+          # usable quotes came back. That prevents
+          # an empty/broken feed from silently
+          # replacing good data.
+          if quote_count == 0:
+
+              print(
+                  "ERROR: No usable market quotes "
+                  "were returned."
+              )
+
+              sys.exit(1)
+
+          with open(
+              "data/market-data.json",
+              "w",
+              encoding="utf-8"
+          ) as file:
+
+              json.dump(
+                  output,
+                  file,
+                  indent=2
+              )
+
+          print()
+          print(
+              f"Saved {quote_count} quotes to "
+              "data/market-data.json"
+          )
+
+          if errors:
+              print(
+                  f"{len(errors)} symbol(s) "
+                  "returned errors."
+              )
+
+          PY
+
+      # -------------------------------------------------------
+      # 5. SHOW SAFE SUMMARY
+      #
+      # This prints quote information but NEVER prints
+      # the API key.
+      # -------------------------------------------------------
+      - name: Verify downloaded data
+        run: |
+          python3 <<'PY'
+          import json
+
+          with open(
+              "data/market-data.json",
+              "r",
+              encoding="utf-8"
+          ) as file:
+              data = json.load(file)
+
+          print(
+              "Generated:",
+              data.get("generated_at")
+          )
+
+          print(
+              "Quote count:",
+              data.get("quote_count")
+          )
+
+          for symbol, quote in (
+              data.get("quotes", {}).items()
+          ):
+              print(
+                  symbol,
+                  "close =",
+                  quote.get("close")
+              )
+
+          PY
+
+      # -------------------------------------------------------
+      # 6. COMMIT UPDATED DATA
+      # -------------------------------------------------------
+      - name: Commit market data
+        run: |
+          git config \
+            user.name \
+            "github-actions[bot]"
+
+          git config \
+            user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/market-data.json
+
+          if git diff --cached --quiet; then
+            echo "No market-data changes to commit."
+            exit 0
+          fi
+
+          git commit \
+            -m "Update market data"
+
+          git push
