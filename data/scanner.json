@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-13T19:49:28.986878+00:00",
+  "generated_at": "2026-10-13T23:41:30.988543+00:00",
   "source": "Twelve Data",
   "mode": "paper",
   "engine": "Doc's Scanner v2",
@@ -28,19 +28,19 @@
       "symbol": "AAPL",
       "market_date": "2026-10-13",
       "status": "QUALIFIED",
-      "market_score": 4,
+      "market_score": 5,
       "max_market_score": 5,
       "price": {
-        "current": 341.59,
+        "current": 341.27,
         "previous_close": 340.97,
-        "daily_change_percent": 0.18
+        "daily_change_percent": 0.09
       },
       "trend": {
         "passed": true,
-        "sma5": 339.258,
-        "sma10": 335.984,
-        "sma20": 336.296,
-        "sma50": 323.7932,
+        "sma5": 339.194,
+        "sma10": 335.952,
+        "sma20": 336.28,
+        "sma50": 323.7868,
         "price_above_sma5": true,
         "price_above_sma10": true,
         "price_above_sma20": true,
@@ -48,40 +48,40 @@
       },
       "momentum": {
         "passed": true,
-        "rsi14": 55.12,
-        "five_day_percent": 2.39,
-        "ten_day_percent": 3.7
+        "rsi14": 54.79,
+        "five_day_percent": 2.29,
+        "ten_day_percent": 3.6
       },
       "volume": {
-        "passed": false,
-        "current": 1335785,
-        "average20": 37102750,
-        "relative_volume": 0.04
+        "passed": true,
+        "current": 38897865,
+        "average20": 37105365,
+        "relative_volume": 1.05
       },
       "volatility": {
-        "atr14": 6.4914
+        "atr14": 6.495
       },
       "market_checks": {
         "trend": true,
         "momentum": true,
-        "volume": false
+        "volume": true
       },
       "paper_setup": {
         "available": true,
-        "entry": 341.59,
-        "stop": 335.0986,
-        "target": 354.5729,
-        "risk_per_share": 6.4914,
-        "reward_per_share": 12.9829,
+        "entry": 341.27,
+        "stop": 334.775,
+        "target": 354.26,
+        "risk_per_share": 6.495,
+        "reward_per_share": 12.99,
         "reward_risk_ratio": 2.0,
         "reward_risk_pass": true,
         "max_paper_dollars": 20.0,
-        "max_fractional_shares": 0.05855
+        "max_fractional_shares": 0.058605
       },
       "reasons": [
         "Trend passed: price is above the 10-day and 20-day averages and the 5-day average is above the 20-day average.",
         "Momentum passed: 5-day and 10-day momentum are positive and RSI is between 50 and 72.",
-        "Volume is below the prior 20-session average.",
+        "Volume passed: latest reported volume is at or above the prior 20-session average.",
         "A standardized ATR paper-trade plan is available. The trade plan does not add points to the market quality score."
       ]
     },
@@ -89,19 +89,19 @@
       "symbol": "MSFT",
       "market_date": "2026-10-13",
       "status": "WATCH",
-      "market_score": 2,
+      "market_score": 3,
       "max_market_score": 5,
       "price": {
-        "current": 544.19,
+        "current": 543.45,
         "previous_close": 541.15,
-        "daily_change_percent": 0.56
+        "daily_change_percent": 0.43
       },
       "trend": {
         "passed": true,
-        "sma5": 534.556,
-        "sma10": 527.049,
-        "sma20": 514.24,
-        "sma50": 503.1062,
+        "sma5": 534.408,
+        "sma10": 526.975,
+        "sma20": 514.203,
+        "sma50": 503.0914,
         "price_above_sma5": true,
         "price_above_sma10": true,
         "price_above_sma20": true,
@@ -109,40 +109,40 @@
       },
       "momentum": {
         "passed": false,
-        "rsi14": 78.01,
-        "five_day_percent": 2.81,
-        "ten_day_percent": 6.92
+        "rsi14": 77.8,
+        "five_day_percent": 2.67,
+        "ten_day_percent": 6.78
       },
       "volume": {
-        "passed": false,
-        "current": 838377,
-        "average20": 22155390,
-        "relative_volume": 0.04
+        "passed": true,
+        "current": 23799223,
+        "average20": 22156535,
+        "relative_volume": 1.07
       },
       "volatility": {
-        "atr14": 11.9507
+        "atr14": 11.9521
       },
       "market_checks": {
         "trend": true,
         "momentum": false,
-        "volume": false
+        "volume": true
       },
       "paper_setup": {
         "available": true,
-        "entry": 544.19,
-        "stop": 532.2393,
-        "target": 568.0914,
-        "risk_per_share": 11.9507,
-        "reward_per_share": 23.9014,
+        "entry": 543.45,
+        "stop": 531.4979,
+        "target": 567.3543,
+        "risk_per_share": 11.9521,
+        "reward_per_share": 23.9043,
         "reward_risk_ratio": 2.0,
         "reward_risk_pass": true,
         "max_paper_dollars": 20.0,
-        "max_fractional_shares": 0.036752
+        "max_fractional_shares": 0.036802
       },
       "reasons": [
         "Trend passed: price is above the 10-day and 20-day averages and the 5-day average is above the 20-day average.",
         "Momentum did not pass because RSI is above the scanner's 72 ceiling.",
-        "Volume is below the prior 20-session average.",
+        "Volume passed: latest reported volume is at or above the prior 20-session average.",
         "A standardized ATR paper-trade plan is available. The trade plan does not add points to the market quality score."
       ]
     },
@@ -153,16 +153,16 @@
       "market_score": 2,
       "max_market_score": 5,
       "price": {
-        "current": 778.355,
+        "current": 778.01,
         "previous_close": 778.1,
-        "daily_change_percent": 0.03
+        "daily_change_percent": -0.01
       },
       "trend": {
         "passed": true,
-        "sma5": 777.235,
-        "sma10": 773.6355,
-        "sma20": 769.8862,
-        "sma50": 768.6095,
+        "sma5": 777.166,
+        "sma10": 773.601,
+        "sma20": 769.869,
+        "sma50": 768.6026,
         "price_above_sma5": true,
         "price_above_sma10": true,
         "price_above_sma20": true,
@@ -170,18 +170,18 @@
       },
       "momentum": {
         "passed": false,
-        "rsi14": 63.02,
-        "five_day_percent": -0.09,
-        "ten_day_percent": 1.85
+        "rsi14": 62.64,
+        "five_day_percent": -0.14,
+        "ten_day_percent": 1.81
       },
       "volume": {
         "passed": false,
-        "current": 709765,
-        "average20": 43533360,
-        "relative_volume": 0.02
+        "current": 25344746,
+        "average20": 43535620,
+        "relative_volume": 0.58
       },
       "volatility": {
-        "atr14": 5.9554
+        "atr14": 5.9557
       },
       "market_checks": {
         "trend": true,
@@ -190,15 +190,15 @@
       },
       "paper_setup": {
         "available": true,
-        "entry": 778.355,
-        "stop": 772.3996,
-        "target": 790.2657,
-        "risk_per_share": 5.9554,
-        "reward_per_share": 11.9107,
+        "entry": 778.01,
+        "stop": 772.0543,
+        "target": 789.9214,
+        "risk_per_share": 5.9557,
+        "reward_per_share": 11.9114,
         "reward_risk_ratio": 2.0,
         "reward_risk_pass": true,
         "max_paper_dollars": 20.0,
-        "max_fractional_shares": 0.025695
+        "max_fractional_shares": 0.025707
       },
       "reasons": [
         "Trend passed: price is above the 10-day and 20-day averages and the 5-day average is above the 20-day average.",
@@ -214,16 +214,16 @@
       "market_score": 0,
       "max_market_score": 5,
       "price": {
-        "current": 743.25,
+        "current": 743.57,
         "previous_close": 746.04,
-        "daily_change_percent": -0.37
+        "daily_change_percent": -0.33
       },
       "trend": {
         "passed": false,
-        "sma5": 749.174,
-        "sma10": 749.311,
-        "sma20": 741.32,
-        "sma50": 726.548,
+        "sma5": 749.238,
+        "sma10": 749.343,
+        "sma20": 741.336,
+        "sma50": 726.5544,
         "price_above_sma5": false,
         "price_above_sma10": false,
         "price_above_sma20": true,
@@ -231,18 +231,18 @@
       },
       "momentum": {
         "passed": false,
-        "rsi14": 51.75,
-        "five_day_percent": -2.16,
-        "ten_day_percent": 0.72
+        "rsi14": 52.03,
+        "five_day_percent": -2.12,
+        "ten_day_percent": 0.76
       },
       "volume": {
         "passed": false,
-        "current": 566273,
-        "average20": 33482895,
-        "relative_volume": 0.02
+        "current": 28524918,
+        "average20": 33493465,
+        "relative_volume": 0.85
       },
       "volatility": {
-        "atr14": 8.3071
+        "atr14": 8.3107
       },
       "market_checks": {
         "trend": false,
@@ -251,15 +251,15 @@
       },
       "paper_setup": {
         "available": true,
-        "entry": 743.25,
-        "stop": 734.9429,
-        "target": 759.8643,
-        "risk_per_share": 8.3071,
-        "reward_per_share": 16.6143,
+        "entry": 743.57,
+        "stop": 735.2593,
+        "target": 760.1914,
+        "risk_per_share": 8.3107,
+        "reward_per_share": 16.6214,
         "reward_risk_ratio": 2.0,
         "reward_risk_pass": true,
         "max_paper_dollars": 20.0,
-        "max_fractional_shares": 0.026909
+        "max_fractional_shares": 0.026897
       },
       "reasons": [
         "Trend did not fully pass.",
@@ -275,35 +275,35 @@
       "market_score": 0,
       "max_market_score": 5,
       "price": {
-        "current": 228.04,
+        "current": 228.52,
         "previous_close": 226.32,
-        "daily_change_percent": 0.76
+        "daily_change_percent": 0.97
       },
       "trend": {
         "passed": false,
-        "sma5": 230.318,
-        "sma10": 232.292,
-        "sma20": 228.2955,
-        "sma50": 223.0168,
+        "sma5": 230.414,
+        "sma10": 232.34,
+        "sma20": 228.3195,
+        "sma50": 223.0264,
         "price_above_sma5": false,
         "price_above_sma10": false,
-        "price_above_sma20": false,
+        "price_above_sma20": true,
         "sma5_above_sma20": true
       },
       "momentum": {
         "passed": false,
-        "rsi14": 53.77,
-        "five_day_percent": -4.68,
-        "ten_day_percent": 0.37
+        "rsi14": 54.43,
+        "five_day_percent": -4.48,
+        "ten_day_percent": 0.58
       },
       "volume": {
         "passed": false,
-        "current": 2176041,
-        "average20": 105751405,
-        "relative_volume": 0.02
+        "current": 83671511,
+        "average20": 105781470,
+        "relative_volume": 0.79
       },
       "volatility": {
-        "atr14": 5.2693
+        "atr14": 5.31
       },
       "market_checks": {
         "trend": false,
@@ -312,15 +312,15 @@
       },
       "paper_setup": {
         "available": true,
-        "entry": 228.04,
-        "stop": 222.7707,
-        "target": 238.5786,
-        "risk_per_share": 5.2693,
-        "reward_per_share": 10.5386,
+        "entry": 228.52,
+        "stop": 223.21,
+        "target": 239.14,
+        "risk_per_share": 5.31,
+        "reward_per_share": 10.62,
         "reward_risk_ratio": 2.0,
         "reward_risk_pass": true,
         "max_paper_dollars": 20.0,
-        "max_fractional_shares": 0.087704
+        "max_fractional_shares": 0.08752
       },
       "reasons": [
         "Trend did not fully pass.",
