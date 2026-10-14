@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-14T20:57:57.904108+00:00",
+  "generated_at": "2026-10-14T23:42:13.148386+00:00",
   "source": "Twelve Data",
   "mode": "paper",
   "quotes": {
@@ -10,13 +10,13 @@
       "currency": "USD",
       "datetime": "2026-10-14",
       "open": 774.91998,
-      "high": 776.34998,
-      "low": 766.71,
-      "close": 769.60999,
+      "high": 776.29999,
+      "low": 766.71002,
+      "close": 769.59998,
       "previous_close": 778.01001,
-      "change": -8.40002,
-      "percent_change": -1.079681,
-      "volume": 141319341
+      "change": -8.41003,
+      "percent_change": -1.080967,
+      "volume": 55376546
     },
     "QQQ": {
       "symbol": "QQQ",
@@ -24,14 +24,14 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "datetime": "2026-10-14",
-      "open": 737.96,
-      "high": 740.44,
-      "low": 726.45,
-      "close": 728.985,
+      "open": 738.0,
+      "high": 740.53003,
+      "low": 726.39001,
+      "close": 728.95001,
       "previous_close": 743.57001,
-      "change": -14.58501,
-      "percent_change": -1.96148,
-      "volume": 828256
+      "change": -14.62,
+      "percent_change": -1.96619,
+      "volume": 51534028
     },
     "AAPL": {
       "symbol": "AAPL",
@@ -40,13 +40,13 @@
       "currency": "USD",
       "datetime": "2026-10-14",
       "open": 344.60501,
-      "high": 347.09,
+      "high": 347.070007,
       "low": 341.72,
-      "close": 343.040009,
+      "close": 342.95999,
       "previous_close": 341.26999,
-      "change": 1.77002,
-      "percent_change": 0.51865666,
-      "volume": 88019676
+      "change": 1.69,
+      "percent_change": 0.4952098,
+      "volume": 49893047
     },
     "MSFT": {
       "symbol": "MSFT",
@@ -57,11 +57,11 @@
       "open": 545.15002,
       "high": 545.73999,
       "low": 532.53998,
-      "close": 533.86902,
+      "close": 533.69,
       "previous_close": 543.45001,
-      "change": -9.58099,
-      "percent_change": -1.76299,
-      "volume": 41958820
+      "change": -9.76001,
+      "percent_change": -1.79594,
+      "volume": 22251503
     },
     "NVDA": {
       "symbol": "NVDA",
@@ -72,11 +72,11 @@
       "open": 225.605,
       "high": 226.0,
       "low": 219.64,
-      "close": 221.5,
+      "close": 221.3,
       "previous_close": 228.52,
-      "change": -7.020004,
-      "percent_change": -3.071943,
-      "volume": 520139313
+      "change": -7.22,
+      "percent_change": -3.15946,
+      "volume": 117762243
     }
   },
   "errors": [],
