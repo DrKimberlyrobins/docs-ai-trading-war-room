@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T20:31:42.365912+00:00",
+  "generated_at": "2026-10-15T23:17:07.991292+00:00",
   "source": "Twelve Data",
   "mode": "paper",
   "quotes": {
@@ -9,14 +9,14 @@
       "exchange": "NYSE",
       "currency": "USD",
       "datetime": "2026-10-15",
-      "open": 766.26,
-      "high": 772.86,
-      "low": 764.43,
-      "close": 771.77,
+      "open": 766.25,
+      "high": 772.87,
+      "low": 764.44,
+      "close": 771.78998,
       "previous_close": 769.59998,
-      "change": 2.17002,
-      "percent_change": 0.28196784,
-      "volume": 1687104
+      "change": 2.19,
+      "percent_change": 0.28456374,
+      "volume": 42916599
     },
     "QQQ": {
       "symbol": "QQQ",
@@ -24,14 +24,14 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "datetime": "2026-10-15",
-      "open": 718.54,
-      "high": 729.39,
-      "low": 715.46,
-      "close": 728.19,
+      "open": 718.53998,
+      "high": 729.42999,
+      "low": 715.435,
+      "close": 728.0,
       "previous_close": 728.95001,
-      "change": -0.76001221,
-      "percent_change": -0.10426122,
-      "volume": 855648
+      "change": -0.95001221,
+      "percent_change": -0.13032611,
+      "volume": 49058351
     },
     "AAPL": {
       "symbol": "AAPL",
@@ -39,25 +39,46 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "datetime": "2026-10-15",
-      "open": 346.95,
-      "high": 347.72,
-      "low": 341.62,
-      "close": 341.91,
+      "open": 346.95001,
+      "high": 347.85001,
+      "low": 341.60001,
+      "close": 342.0,
       "previous_close": 342.95999,
-      "change": -1.049991,
-      "percent_change": -0.30615567,
-      "volume": 1167196
+      "change": -0.95999146,
+      "percent_change": -0.27991354,
+      "volume": 39605715
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "name": "Microsoft Corporation Common Stock",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "datetime": "2026-10-15",
+      "open": 533.65503,
+      "high": 541.13312,
+      "low": 531.21997,
+      "close": 539.44,
+      "previous_close": 533.69,
+      "change": 5.75,
+      "percent_change": 1.077404,
+      "volume": 23481292
+    },
+    "NVDA": {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "datetime": "2026-10-15",
+      "open": 215.34,
+      "high": 218.46919,
+      "low": 212.85001,
+      "close": 217.23,
+      "previous_close": 221.3,
+      "change": -4.070007,
+      "percent_change": -1.83914,
+      "volume": 126396690
     }
   },
-  "errors": [
-    {
-      "symbol": "MSFT",
-      "message": "HTTP Error 429: Too Many Requests"
-    },
-    {
-      "symbol": "NVDA",
-      "message": "HTTP Error 429: Too Many Requests"
-    }
-  ],
-  "quote_count": 3
+  "errors": [],
+  "quote_count": 5
 }
