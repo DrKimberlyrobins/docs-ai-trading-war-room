@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-22T20:59:45.825243+00:00",
+  "generated_at": "2026-10-22T23:55:08.817353+00:00",
   "source": "Twelve Data",
   "mode": "paper",
   "quotes": {
@@ -11,12 +11,12 @@
       "datetime": "2026-10-22",
       "open": 766.37,
       "high": 767.71002,
-      "low": 761.16498,
-      "close": 764.02002,
+      "low": 761.16998,
+      "close": 763.96002,
       "previous_close": 773.090027,
-      "change": -9.070007,
-      "percent_change": -1.17321,
-      "volume": 109586220
+      "change": -9.13,
+      "percent_change": -1.18098,
+      "volume": 54034474
     },
     "QQQ": {
       "symbol": "QQQ",
@@ -27,11 +27,11 @@
       "open": 713.67999,
       "high": 715.42999,
       "low": 701.90002,
-      "close": 704.59003,
+      "close": 704.46997,
       "previous_close": 725.20001,
-      "change": -20.60999,
-      "percent_change": -2.84197,
-      "volume": 473080770
+      "change": -20.73004,
+      "percent_change": -2.85853,
+      "volume": 63518367
     },
     "AAPL": {
       "symbol": "AAPL",
@@ -42,11 +42,11 @@
       "open": 344.935,
       "high": 348.35999,
       "low": 342.28,
-      "close": 348.32001,
+      "close": 348.22,
       "previous_close": 343.98999,
-      "change": 4.33002,
-      "percent_change": 1.25876,
-      "volume": 170200861
+      "change": 4.23001,
+      "percent_change": 1.22969,
+      "volume": 46659852
     },
     "MSFT": {
       "symbol": "MSFT",
@@ -57,11 +57,11 @@
       "open": 532.70001,
       "high": 533.59601,
       "low": 520.29999,
-      "close": 521.58002,
+      "close": 521.080017,
       "previous_close": 532.95001,
-      "change": -11.37,
-      "percent_change": -2.13341,
-      "volume": 17952414
+      "change": -11.87,
+      "percent_change": -2.22722,
+      "volume": 21072346
     },
     "NVDA": {
       "symbol": "NVDA",
@@ -69,14 +69,14 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "datetime": "2026-10-22",
-      "open": 216.88,
+      "open": 217.23,
       "high": 218.88,
       "low": 211.25999,
-      "close": 212.284,
+      "close": 212.21001,
       "previous_close": 221.97,
-      "change": -9.686,
-      "percent_change": -4.36365,
-      "volume": 474454434
+      "change": -9.75999,
+      "percent_change": -4.39699,
+      "volume": 124963035
     }
   },
   "errors": [],
