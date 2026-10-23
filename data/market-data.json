@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-23T20:38:16.101285+00:00",
+  "generated_at": "2026-10-23T23:29:21.093488+00:00",
   "source": "Twelve Data",
   "mode": "paper",
   "quotes": {
@@ -10,13 +10,13 @@
       "currency": "USD",
       "datetime": "2026-10-23",
       "open": 759.896,
-      "high": 763.47,
+      "high": 763.46997,
       "low": 758.67999,
-      "close": 759.84998,
+      "close": 759.96997,
       "previous_close": 763.96002,
-      "change": -4.11005,
-      "percent_change": -0.53799234,
-      "volume": 94821567
+      "change": -3.99005,
+      "percent_change": -0.52228535,
+      "volume": 33133505
     },
     "QQQ": {
       "symbol": "QQQ",
@@ -27,11 +27,11 @@
       "open": 702.10199,
       "high": 709.29999,
       "low": 701.15997,
-      "close": 704.39001,
+      "close": 704.40002,
       "previous_close": 704.46997,
-      "change": -0.079956055,
-      "percent_change": -0.011349817,
-      "volume": 321436991
+      "change": -0.069946289,
+      "percent_change": -0.0099289242,
+      "volume": 29960981
     },
     "AAPL": {
       "symbol": "AAPL",
@@ -46,7 +46,7 @@
       "previous_close": 348.22,
       "change": -0.49499512,
       "percent_change": -0.14215011,
-      "volume": 117950436
+      "volume": 39450857
     },
     "MSFT": {
       "symbol": "MSFT",
@@ -55,13 +55,13 @@
       "currency": "USD",
       "datetime": "2026-10-23",
       "open": 517.995,
-      "high": 525.8,
+      "high": 525.77002,
       "low": 515.70001,
-      "close": 524.52502,
+      "close": 524.51001,
       "previous_close": 521.080017,
-      "change": 3.44501,
-      "percent_change": 0.66112827,
-      "volume": 10310083
+      "change": 3.42999,
+      "percent_change": 0.65824683,
+      "volume": 13629072
     },
     "NVDA": {
       "symbol": "NVDA",
@@ -72,11 +72,11 @@
       "open": 210.94,
       "high": 213.85001,
       "low": 210.17999,
-      "close": 210.9975,
+      "close": 210.96001,
       "previous_close": 212.21001,
-      "change": -1.21251,
-      "percent_change": -0.57137228,
-      "volume": 444351090
+      "change": -1.25,
+      "percent_change": -0.58903914,
+      "volume": 79740563
     }
   },
   "errors": [],
