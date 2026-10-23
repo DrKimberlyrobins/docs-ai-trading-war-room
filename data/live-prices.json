@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-23T20:40:01.439475+00:00",
+  "generated_at": "2026-10-23T23:31:22.126459+00:00",
   "source": "Twelve Data",
   "mode": "paper",
   "engine": "Doc's Live Price Engine v1",
@@ -8,26 +8,26 @@
   "quotes": [
     {
       "symbol": "SPY",
-      "price": 759.85,
+      "price": 759.97,
       "previous_close": 763.96,
       "open": 759.896,
       "high": 763.47,
       "low": 758.68,
-      "change": -4.1101,
-      "percent_change": -0.538,
-      "volume": 94821567,
+      "change": -3.9901,
+      "percent_change": -0.5223,
+      "volume": 33133505,
       "market_date": "2026-10-23"
     },
     {
       "symbol": "QQQ",
-      "price": 704.39,
+      "price": 704.4,
       "previous_close": 704.47,
       "open": 702.102,
       "high": 709.3,
       "low": 701.16,
-      "change": -0.08,
-      "percent_change": -0.0113,
-      "volume": 321436991,
+      "change": -0.0699,
+      "percent_change": -0.0099,
+      "volume": 29960981,
       "market_date": "2026-10-23"
     },
     {
@@ -39,31 +39,31 @@
       "low": 345.75,
       "change": -0.495,
       "percent_change": -0.1422,
-      "volume": 117950436,
+      "volume": 39450857,
       "market_date": "2026-10-23"
     },
     {
       "symbol": "MSFT",
-      "price": 524.525,
+      "price": 524.51,
       "previous_close": 521.08,
       "open": 517.995,
-      "high": 525.8,
+      "high": 525.77,
       "low": 515.7,
-      "change": 3.445,
-      "percent_change": 0.6611,
-      "volume": 10310083,
+      "change": 3.43,
+      "percent_change": 0.6582,
+      "volume": 13629072,
       "market_date": "2026-10-23"
     },
     {
       "symbol": "NVDA",
-      "price": 210.9975,
+      "price": 210.96,
       "previous_close": 212.21,
       "open": 210.94,
       "high": 213.85,
       "low": 210.18,
-      "change": -1.2125,
-      "percent_change": -0.5714,
-      "volume": 444351090,
+      "change": -1.25,
+      "percent_change": -0.589,
+      "volume": 79740563,
       "market_date": "2026-10-23"
     }
   ],
