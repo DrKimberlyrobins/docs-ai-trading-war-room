@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-11T19:55:55.012886+00:00",
+  "generated_at": "2026-11-12T01:45:12.803062+00:00",
   "source": "Twelve Data",
   "mode": "paper",
   "quotes": {
@@ -9,14 +9,14 @@
       "exchange": "NYSE",
       "currency": "USD",
       "datetime": "2026-11-11",
-      "open": 756.74,
-      "high": 762.51,
-      "low": 754.9,
-      "close": 760.76,
+      "open": 756.79999,
+      "high": 762.51001,
+      "low": 754.90997,
+      "close": 759.81,
       "previous_close": 749.91998,
-      "change": 10.84002,
-      "percent_change": 1.44549,
-      "volume": 824079
+      "change": 9.89001,
+      "percent_change": 1.31881,
+      "volume": 37707134
     },
     "QQQ": {
       "symbol": "QQQ",
@@ -24,14 +24,14 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "datetime": "2026-11-11",
-      "open": 687.27,
-      "high": 695.57,
-      "low": 683.6,
-      "close": 692.71,
+      "open": 687.27502,
+      "high": 695.57001,
+      "low": 683.59998,
+      "close": 690.38,
       "previous_close": 674.76001,
-      "change": 17.94999,
-      "percent_change": 2.6602,
-      "volume": 572129
+      "change": 15.62,
+      "percent_change": 2.3149,
+      "volume": 42821615
     },
     "AAPL": {
       "symbol": "AAPL",
@@ -39,14 +39,14 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "datetime": "2026-11-11",
-      "open": 349.535,
-      "high": 355.33,
-      "low": 349.325,
-      "close": 354.765,
+      "open": 349.58499,
+      "high": 355.89999,
+      "low": 349.32501,
+      "close": 355.63,
       "previous_close": 348.51001,
-      "change": 6.25499,
-      "percent_change": 1.79478,
-      "volume": 911146
+      "change": 7.12,
+      "percent_change": 2.042982,
+      "volume": 34023762
     },
     "MSFT": {
       "symbol": "MSFT",
@@ -54,14 +54,14 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "datetime": "2026-11-11",
-      "open": 534.26,
-      "high": 534.57,
-      "low": 518.52,
-      "close": 520.81,
+      "open": 534.21997,
+      "high": 534.76001,
+      "low": 518.45001,
+      "close": 521.125,
       "previous_close": 533.15997,
-      "change": -12.34997,
-      "percent_change": -2.31637,
-      "volume": 947759
+      "change": -12.034973,
+      "percent_change": -2.25729,
+      "volume": 28565538
     },
     "NVDA": {
       "symbol": "NVDA",
@@ -69,14 +69,14 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "datetime": "2026-11-11",
-      "open": 172.76,
-      "high": 177.53,
-      "low": 170.8,
-      "close": 175.81,
+      "open": 172.72,
+      "high": 177.53999,
+      "low": 170.77,
+      "close": 173.73,
       "previous_close": 168.89,
-      "change": 6.92,
-      "percent_change": 4.097342,
-      "volume": 9186251
+      "change": 4.84,
+      "percent_change": 2.86577,
+      "volume": 281514030
     }
   },
   "errors": [],
